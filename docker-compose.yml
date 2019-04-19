@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  edv-database:
+    image: mariadb:latest
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: contrasenya_admin
+      MYSQL_DATABASE: nom_base_de_dades
+      MYSQL_USER: nom_usuari
+      MYSQL_PASSWORD: contrasenya_usuari
+
+  edv-web:
+    image: php:apache
+    depends_on:
+      - "edv-database"
+    ports:
+      - "80:80"
+    links:
+      - edv-database
+    restart: always
+    volumes:
+      - ./html:/var/www/html
+      - ./apache2_files:/etc/apache2
