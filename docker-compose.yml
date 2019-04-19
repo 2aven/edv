@@ -1,11 +1,16 @@
 version: '3.3'
 
+networks:
+  edv-net:
+
 services:
   edv-database:
     image: mariadb:latest
     volumes:
       - ./db_data:/var/lib/mysql
     restart: always
+    networks:
+      - edv-net
     environment:
       MYSQL_ROOT_PASSWORD: contrasenya_admin
       MYSQL_DATABASE: nom_base_de_dades
@@ -16,6 +21,8 @@ services:
     image: php:apache
     depends_on:
       - "edv-database"
+    networks:
+      - edv-net
     ports:
       - "80:80"
     links:
