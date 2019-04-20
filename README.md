@@ -5,13 +5,15 @@
 ToDo - List
 ---
 
-[x] Git
+- [x] Git
 
-[ ] Preparar base de dades
-  - [x] Esquema E/R
-  - [ ] Normalització
-  - [ ] Taules SQL
+- [ ] Preparar base de dades
+  - [ ] Esquema E/R
+    - [x] Esquema bàsic
+    - [ ] Atributs
+  - [-] Normalització
+  - [-] Taules SQL
 
-[ ]: Pendent
-[-]: Realitzat
-[x]: Realitzat i documentat
+- [ ]: Pendent
+- [-]: Realitzat
+- [x]: Realitzat i documentat
