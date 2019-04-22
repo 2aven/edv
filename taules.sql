@@ -1,13 +1,18 @@
 
-  -- userID          ->  nom, alies, email, passwd ...
-  -- skillID         ->  nom, descripcio, ...
+  -- userID          ->  user, nom, alies, email, passwd ...
+  -- skillID         ->  nom, directori, autor, ...
   -- dadesID         ->  vector-dades
   -- userID, skillID ->  vector-config
   -- codSesio, userID,
   --   skillID,dadesID   ->  tinici, tfinal, (verificació?)  
 
 create or replace table usuari (
-  userID  bigint unsigned not null auto_increment primary key
+  userID  bigint unsigned not null auto_increment primary key,
+  user    tinytext not null,
+  nom     tinytext,
+  alies   tinytext,
+  email   tinytext,
+  passwd  tinytext  
 );
 
 create or replace table skill (
@@ -15,7 +20,8 @@ create or replace table skill (
 );
 
 create or replace table dades (
-  dadesID bigint unsigned not null auto_increment primary key
+  dadesID bigint unsigned not null auto_increment primary key,
+  dades   longtext not null
 );
 
 create or replace table configura (

@@ -18,7 +18,7 @@ services:
       MYSQL_PASSWORD: contrasenya_usuari
 
   edv-web:
-    image: php:apache
+    build: ./php-apache
     depends_on:
       - "edv-database"
     networks:
