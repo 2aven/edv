@@ -8,7 +8,7 @@
 
 create or replace table usuari (
   userID  bigint unsigned not null auto_increment primary key,
-  user    tinytext not null,
+  nomusr  tinytext not null,
   nom     tinytext,
   alies   tinytext,
   email   tinytext,
@@ -16,7 +16,10 @@ create or replace table usuari (
 );
 
 create or replace table skill (
-  skillID bigint unsigned not null auto_increment primary key
+  skillID int unsigned not null auto_increment primary key,
+  nomsk   tinytext not null,
+  pag     tinytext not null,
+  imatge  tinytext not null
 );
 
 create or replace table dades (
