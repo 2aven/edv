@@ -14,7 +14,7 @@ function showSkills($skillList){
           <div class="col-md-6">
             <div class="card-block text-left">
               <h4 class="card-title"><?= $skillElement["nomsk"] ?></h4>
-              <form class="form-inline my-auto" method="GET" action="<?= $skillElement['pag']?>">
+              <form class="form-inline my-auto" method="GET" action="<?= $skillElement['ruta']?>">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
                 name='id_skill' value="<?=$skillElement['id']?>">Detall</button>
               </form>

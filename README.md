@@ -12,30 +12,35 @@ ToDo - List
 
 - [x] Git
 
-- [ ] Preparar base de dades
-  - [ ] Esquema E/R
+- [x] Preparar base de dades
+  - [x] Esquema E/R
     - [x] Esquema bàsic
-    - [3] Atributs
-  - [4] Normalització
-  - [5] Taules SQL
+    - [x] Atributs
+  - [x] Normalització
+  - [x] Taules SQL
 
 - [ ] Web
   - [ ] HTML / CSS
     - [ ] Disseny principal
-      - [6] index
-      - [7] usuari
-      - [t] skills
+      - [ ] index
+        - [1] Header amb login
+        - [9] llistar skills
+      - [2] formulari sign-in
+      - [4] pàgina usuari
   - [ ] PHP 
     - [ ] sessió
-      - [8] creació usuari
-      - [9] login / logout
+      - [x] login / logout
+      - [3] creació usuari
+      - [5] obtenció dades
+      - [6] configuració dades
     - [ ] skills
-      - [10] obtenció dades
-      - [11] introducció dades 
-      - [e] configuració
+      - [8] obtenció dades
+      - [t] configuració
+      - [e] introducció dades 
+      
 - [ ] Modul skill eDv
-  - [12] HTML / CSS - Entorn Skill
-  - [13] JS - Comportament Skill
+  - [7] HTML / CSS - Entorn Skill
+  - [10] JS - Comportament Skill
 
 - [n]: Pendent (n:prioritat)
 - [-]: Realitzat
