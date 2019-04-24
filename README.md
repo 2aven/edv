@@ -19,28 +19,30 @@ ToDo - List
   - [x] Normalització
   - [x] Taules SQL
 
-- [ ] Web
+- [ ] Web - estructura
   - [ ] HTML / CSS
     - [ ] Disseny principal
       - [ ] index
-        - [1] Header amb login
+        - [-] Header amb login
         - [9] llistar skills
-      - [2] formulari sign-in
+      - [-] formulari sign-in
+        - [ ] --> incloure Data-Naixament a la base de dades, usuari
       - [4] pàgina usuari
   - [ ] PHP 
     - [ ] sessió
-      - [x] login / logout
-      - [3] creació usuari
-      - [5] obtenció dades
+      - [-] login / logout
+      - [-] creació usuari
+        - [5] filtratge de dades del formulari
       - [6] configuració dades
     - [ ] skills
       - [8] obtenció dades
       - [t] configuració
-      - [e] introducció dades 
+      - [10] introducció dades 
+    - [ ] --> modificar sentències *or die(mysqli_error($db))*
       
 - [ ] Modul skill eDv
   - [7] HTML / CSS - Entorn Skill
-  - [10] JS - Comportament Skill
+  - [e] JS - Comportament Skill
 
 - [n]: Pendent (n:prioritat)
 - [-]: Realitzat

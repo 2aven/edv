@@ -1,7 +1,7 @@
 <div class="container junstify-content-center">
   <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="index.php">
-      <span class="text-success display-4 veganreview-logo">D&#x24CB</span>
+      <span class="text-success display-4">D&#x24CB</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

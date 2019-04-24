@@ -25,14 +25,16 @@
     require_once 'header.php';
 
 
-    if(   (isset($_POST['login-btn'])     && $_POST['login-btn']=="submit" )  // Login button
+    if( (isset($_POST['login-btn'])     && $_POST['login-btn']=="submit" )  // Login button
     ||  (isset($_POST['login-submit'])  && $_SESSION['stat']==false )       // Failed login attempt
     ){
       require_once 'login.php';
     } else if (isset($_POST['create-btn']) && $_POST['create-btn']=="submit") {  // Create button
       require_once 'signin.php';
     } else if (isset($_POST['create-submit']) && $_POST['create-submit']=="submit") {  // Create form
-      crearUsuari($_POST);
+      if (comprovaFormulari())
+        crearUsuari();
+        require_once 'login.php';
     } else {
       require_once 'home.php';
     }

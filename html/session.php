@@ -14,11 +14,11 @@
       /* in case there's no data, returns: false */
     if ($loginData){
       /* INIT - SESSION WITH DB-DATA */    
-      $_SESSION['usr']    = $loginData['username'];
+      $_SESSION['usr']    = $loginData['nomusr'];
       $_SESSION['email']  = $loginData['email'];
-      $_SESSION['name']   = $loginData['name'];
-      $_SESSION['surname']= $loginData['surname'];
-      $_SESSION['id']     = $loginData['id'];
+      $_SESSION['name']   = $loginData['nom'];
+      $_SESSION['alias']  = $loginData['alies'];
+      $_SESSION['id']     = $loginData['userID'];
       $_SESSION['stat']   = true;
     } else {
       $_SESSION['stat']   = false;    // Failed login attempt
