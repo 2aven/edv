@@ -59,4 +59,10 @@ function crearUsuari(){
   echo "Usuari creat, estrena'l!";
 }
 
+function getSkills(){
+  return [];
+  // LLISTAR SKILLS: return array
+  
+}
+
 ?>

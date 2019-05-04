@@ -19,7 +19,6 @@
 <body>
   
   <?php 
-    require_once 'functions.php';
     require_once 'edvdatabase.php';
     require_once 'session.php';
     require_once 'header.php';
@@ -38,6 +37,9 @@
     } else {
       require_once 'home.php';
     }
+
+    // Stuff happens, and then...
+    require_once 'skills/edv/edv.php';
     
     require_once 'footer.php';
     ?>

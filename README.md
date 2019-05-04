@@ -43,6 +43,13 @@ ToDo - List
 - [ ] Modul skill eDv
   - [7] HTML / CSS - Entorn Skill
   - [e] JS - Comportament Skill
+    - [ ] Entrenador
+      - [ ] Síl·labes
+      - [ ] Paraules
+      - [ ] Text
+    - [ ] Examinador
+      - [ ] TEST
+      - [ ] Generar dades
 
 - [n]: Pendent (n:prioritat)
 - [-]: Realitzat
