@@ -29,5 +29,5 @@ services:
       - edv-database
     restart: always
     volumes:
-      - ./html:/var/www/html
+      - ./edv:/var/www/html
       - ./apache2_files:/etc/apache2
