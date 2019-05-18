@@ -15,6 +15,10 @@ RUN a2enmod rewrite
 127.0.0.1	localhost
 127.0.0.1	dev.edv.net ca.dev.edv.net es.dev.edv.net en.dev.edv.net
 
+#### PagesController
+ariany@GLaDOS:~/PFC/edv$ php artisan make:controller PagesController
+Controller created successfully.
+
 #### Node.js (per compilar scss de Laravel)
 curl -sL https://deb.nodesource.com/setup_12.x | bash -
 apt-get install -y nodejs
@@ -25,12 +29,28 @@ després:
 npm run dev     #per compilar
 npm run watch   #per que s'autocompili quan fem modificacións
 
+// webpack.mix.js -- Evitar error de mapeig de font després de: npm run dev / watch
+```js
+if (!mix.inProduction()) {
+  mix.webpackConfig({
+      devtool: 'source-map'
+  })
+  .sourceMaps()
+}
+```
+
 #### LanguageMiddleware
 ```ShellSession
 ariany@GLaDOS:~/PFC/edv$ php artisan make:middleware LangMiddleware
 Middleware created successfully.
 ```
-+ Content
+Agregar això al kernell
+```php
+  \App\Http\Middleware\LangMiddleware::class
+```
+y el contingut
+
+
 
 ToDo - List
 ---
@@ -50,39 +70,27 @@ ToDo - List
   - [x] Normalització
   - [x] Taules SQL
 
-- [ ] Web - estructura
-  - [ ] HTML / CSS
-    - [ ] Disseny principal
-      - [ ] index
-        - [ ] Header amb login
-        - [ ] llistar skills
-      - [ ] formularis Sessió:
-        - [ ] sign-in
-        - [ ] login/logout
-      - [ ] pàgina usuari
-    - [ ] Mòdul EDV
-  - [ ] Laravel:  
-    - [ ] Model - base de dades
-    - [ ] Sessió
-      - [ ] login / logout
-      - [ ] creació usuari
-      - [ ] configuració dades
-    - [ ] Skills
-      - [ ] obtenció dades
-      - [ ] configuració
-      - [ ] introducció dades
-      
-- [ ] Modul skill eDv
-  - [ ] HTML / CSS - Entorn Skill
-  - [ ] JS - Comportament Skill
-    - [ ] Entrenador
+- [ ] Sistema de Login
+  - [ ] Login/Logout
+  - [ ] Dashboard - Basic info
+  - [ ] Modificar Model DB
+  - [ ] Signin
+  - [ ] Incloure Login al Navbar
+  - [ ] Tunejar presentació
+
+- [ ] Modul Skill 
+  - [ ] Model DB
+  - [ ] Pagina principal:
+    - [ ] Test
+    - [ ] Entrenament
       - [ ] Síl·labes
       - [ ] Paraules
       - [ ] Text
-    - [ ] Examinador
-      - [ ] TEST
-      - [ ] Generar dades
-
-- [n]: Pendent (n:prioritat)
-- [-]: Realitzat
+  - [ ] Obtenció dades config
+  - [ ] Formulari config
+  - [ ] Captació dades dels tests
+  - [ ] Obtenció dades anònimes
+  
+- [ ]: Pendent (n:prioritat)
+- [0]: Realitzat
 - [x]: Realitzat i documentat

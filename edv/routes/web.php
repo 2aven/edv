@@ -11,8 +11,5 @@
 |
 */
 
-// Route::domain('{locale}.dev.edv.net')->group(function () {
-//   App::setLocale($locale);  
-// });
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');

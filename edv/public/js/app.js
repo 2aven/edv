@@ -49444,3 +49444,4 @@ module.exports = __webpack_require__(/*! /home/ariany/PFC/edv/resources/sass/app
 /***/ })
 
 /******/ });
+//# sourceMappingURL=app.js.map
