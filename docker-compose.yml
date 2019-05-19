@@ -10,12 +10,11 @@ services:
       - ./db_data:/var/lib/mysql
     restart: always
     networks:
-      - edv-net
-    environment:
-      MYSQL_ROOT_PASSWORD: contrasenya_admin
-      MYSQL_DATABASE: nom_base_de_dades
-      MYSQL_USER: nom_usuari
-      MYSQL_PASSWORD: contrasenya_usuari
+      edv-net:
+        aliases:
+          - edv-db
+    env_file:
+      - edv.env
 
   edv-web:
     build: ./php-apache

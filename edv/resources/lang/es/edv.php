@@ -1,0 +1,14 @@
+<?php
+  return [
+
+    //Skills Index Cards
+    "name"   => "Entrenador Dvorak",
+    "description"   => "Aprende mecanografía para escribir mas rápido que tu torrente de pensamiento",
+    "entry"   => "Entra",
+
+    //Skill Main Page ::
+    "title"   => "Entrenador Dvorak",
+    "slogan"  => "Aprende mecanografía para escribir mas rápido que tu torrente de pensamiento"
+
+  ];
+?>
