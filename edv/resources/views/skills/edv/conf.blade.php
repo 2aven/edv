@@ -2,7 +2,7 @@
 @section('content')
 
   <div class="jumb otron text-center">
-    {{ $skillConfig }}
+    {{ $skillConf }}
   </div>
   
     

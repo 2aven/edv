@@ -9,13 +9,40 @@ use App\Skill;
 class SkillConfigsController extends Controller
 {
   /**
+   * Get the configuration from the resource for specific user and skill.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  private function getSkillConf($userId,$skill)
+  {
+    $skillId    =   Skill::select('skillId')->where('slug',$skill)->first();
+    $skillConf  =   SkillConfig::select('vconf')
+    ->where('userId',$userId)
+    ->where('skillId',$skillId)
+    ->first();
+
+    // previ a tenir dump-data
+      return "SkillId: $skillId ;; userId: $userId"; 
+    // -- -- -- -- -- -- -- --
+    return $skillConf;
+  }
+  
+  /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
   public function index()
   {
-      //
+    $skillsConf = [];
+    $skills = Skill::all();
+    $userId     =   auth()->check() ? auth()->user()->id : 1;
+    
+    foreach($skills as $skill){
+      $skillsConf[]= $this->getSkillConf($userId,$skill);
+    }
+
+    return view('pages.skillsconf')->with('skillsConf',$skillsConf);
   }
 
   /**
@@ -49,14 +76,11 @@ class SkillConfigsController extends Controller
   {
     //$userId = User::where('user',$user)->value('id');
     $userId     =   auth()->check() ? auth()->user()->id : 1;
-    $skillId    =   Skill::select('skillId')->where('slug',$skill)->first();
-    $skillConfig =  SkillConfig::select('vconf')
-      ->where('userId',$userId)
-      ->where('skillId',$skillId)
-      ->first();
-
-    $skillConfig = "SkillId: $skillId ;; userId: $userId"; 
-    return view("skills.$skill.conf")->with('skillConfig',$skillConfig);
+    
+    // previ a tenir dump-data
+      $skillConf  = $this->getSkillConf($userId,$skill); 
+    // -- -- -- -- -- -- -- --
+    return view("skills.$skill.conf")->with('skillConf',$skillConf);
   }
 
   /**

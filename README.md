@@ -290,8 +290,8 @@ ToDo - List
   - [x] Model DB
   - [ ] Controlador: S'ha de filtrar per usuari
   - [ ] Obtenció dades config
-  - [ ] Formulari config
   - [ ] Carregar Config a la sessió (Anonim té els valors per defecte a la DB)
+  - [ ] Formulari config -> Modifica les dades a la sessió i, si té usuari, les guarda a la DB
 
 - [ ] Skill EDV
   - [ ] Pagina principal edv:
