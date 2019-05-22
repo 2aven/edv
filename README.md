@@ -281,16 +281,17 @@ ToDo - List
   - [ ] Incloure Login al Navbar
   - [ ] Tunejar presentació
 
-- [ ] Skills
+- [x] Skills
   - [x] Controlador
   - [x] Model DB
-  - [ ] Edit :: incorporar traducció
+  - [x] Incorporar traducció
 
 - [ ] Config :: Model-Controlador
+  - [x] Model DB
+  - [ ] Controlador: S'ha de filtrar per usuari
   - [ ] Obtenció dades config
   - [ ] Formulari config
-  - [ ] Captació dades dels tests
-  - [ ] Obtenció dades anònimes
+  - [ ] Carregar Config a la sessió (Anonim té els valors per defecte a la DB)
 
 - [ ] Skill EDV
   - [ ] Pagina principal edv:
@@ -299,6 +300,8 @@ ToDo - List
       - [ ] Síl·labes
       - [ ] Paraules
       - [ ] Text
+  - [ ] Captació dades dels tests
+  - [ ] Obtenció dades anònimes
   
 - [ ]: Pendent (n:prioritat)
 - [0]: Realitzat
