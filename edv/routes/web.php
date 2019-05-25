@@ -15,4 +15,4 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
 Route::resource('skills','SkillsController');
-Route::resource('skillsconf','SkillConfigsController');
+Route::resource('skillsconf','SkillConfController');

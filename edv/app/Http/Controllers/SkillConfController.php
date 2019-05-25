@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SkillConfig;
+use App\SkillConf;
 use App\Skill;
 
-class SkillConfigsController extends Controller
+class SkillConfController extends Controller
 {
   /**
    * Get the configuration from the resource for specific user and skill.
@@ -15,15 +15,14 @@ class SkillConfigsController extends Controller
    */
   private function getSkillConf($userId,$skill)
   {
-    $skillId    =   Skill::select('skillId')->where('slug',$skill)->first();
-    $skillConf  =   SkillConfig::select('vconf')
-    ->where('userId',$userId)
-    ->where('skillId',$skillId)
-    ->first();
 
-    // previ a tenir dump-data
-      return "SkillId: $skillId ;; userId: $userId"; 
-    // -- -- -- -- -- -- -- --
+    $skillId    =   Skill::select()->where('slug',$skill)->first()->skillId;
+
+    $skillConf  =   SkillConf::select()
+      ->where('userId',$userId)
+      ->where('skillId',$skillId)
+      ->first()->vconf;
+      
     return $skillConf;
   }
   
@@ -39,7 +38,7 @@ class SkillConfigsController extends Controller
     $userId     =   auth()->check() ? auth()->user()->id : 1;
     
     foreach($skills as $skill){
-      $skillsConf[]= $this->getSkillConf($userId,$skill);
+      $skillsConf[$skill->slug]= $this->getSkillConf($userId,$skill->slug);
     }
 
     return view('pages.skillsconf')->with('skillsConf',$skillsConf);
@@ -63,7 +62,7 @@ class SkillConfigsController extends Controller
    */
   public function store(Request $request)
   {
-      //
+      return "so yes";
   }
 
   /**
@@ -76,11 +75,9 @@ class SkillConfigsController extends Controller
   {
     //$userId = User::where('user',$user)->value('id');
     $userId     =   auth()->check() ? auth()->user()->id : 1;
-    
-    // previ a tenir dump-data
-      $skillConf  = $this->getSkillConf($userId,$skill); 
-    // -- -- -- -- -- -- -- --
-    return view("skills.$skill.conf")->with('skillConf',$skillConf);
+    $skillConf  = $this->getSkillConf($userId,$skill); 
+
+    return view("skills.$skill.conf")->with(['skillConf' => $skillConf, 'slug' => $skill]);
   }
 
   /**

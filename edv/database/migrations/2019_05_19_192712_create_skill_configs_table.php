@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSkillConfigsTable extends Migration
+class CreateSkillConfTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSkillConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('skill_configs', function (Blueprint $table) {
+        Schema::create('skill_conf', function (Blueprint $table) {
             $table->bigInteger('userId')->unsigned();
             $table->bigInteger('skillId')->unsigned();
             $table->json('vconf');
@@ -31,6 +31,6 @@ class CreateSkillConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skill_configs');
+        Schema::dropIfExists('skill_conf');
     }
 }

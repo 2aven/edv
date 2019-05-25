@@ -3,9 +3,11 @@
 
   <div class="jumb otron text-center">
     <ul>
-    @foreach ($skillsConf as $skillConf)
+    @foreach ($skillsConf as $slug => $skillConf)
         <li>
-        {{ var_dump($skillConf) }}
+          {{ __("$slug.title") }}
+          {{ var_dump($skillConf) }}
+          <a href="/skillsconf/{{ $slug }}"> {{ __("$slug.conflink") }} </a>  
         </li>
       @endforeach
     </ul>

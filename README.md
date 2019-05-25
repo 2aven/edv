@@ -288,8 +288,8 @@ ToDo - List
 
 - [ ] Config :: Model-Controlador
   - [x] Model DB
-  - [ ] Controlador: S'ha de filtrar per usuari
-  - [ ] Obtenció dades config
+  - [ ] Controlador: S'ha de filtrar per usuari (sessió)
+  - [x] Obtenció dades config
   - [ ] Carregar Config a la sessió (Anonim té els valors per defecte a la DB)
   - [ ] Formulari config -> Modifica les dades a la sessió i, si té usuari, les guarda a la DB
 

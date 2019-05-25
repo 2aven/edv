@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SkillConfig extends Model
+class SkillConf extends Model
 {
     //
 }

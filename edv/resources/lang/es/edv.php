@@ -8,7 +8,14 @@
 
     //Skill Main Page ::
     "title"   => "Entrenador Dvorak",
-    "slogan"  => "Aprende mecanografía para escribir mas rápido que tu torrente de pensamiento"
+    "slogan"  => "Aprende mecanografía para escribir mas rápido que tu torrente de pensamiento",
+    
+    //:: SkillsConf Index ::
+    "conflink"  => "Configura",
+    "method"    => "Método",
+    "lang"      => "Idioma",
+    "keymap"    => "Teclado",
+    "backspc"   => "Tecla Retroceso"
 
   ];
 ?>

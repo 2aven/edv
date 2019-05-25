@@ -1,14 +1,21 @@
 <?php
   return [
 
-    //Skills Index Cards
+    //:: Skills Index Cards ::
     "name"   => "Entrenador Dvorak",
     "description"   => "Aprén mecanografía per escriure més ràpid que el teu torrent de pensament",
     "entry"   => "Entra",
 
-    //Skill Main Page ::
+    //:: Skill Main Page ::
     "title"   => "Entrenador Dvorak",
-    "slogan"  => "Aprén mecanografía per escriure més ràpid que el teu torrent de pensament"
+    "slogan"  => "Aprén mecanografía per escriure més ràpid que el teu torrent de pensament",
+
+    //:: SkillsConf Index ::
+    "conflink" => "Configura",
+    "method"    => "Mètode",
+    "lang"      => "Llengua",
+    "keymap"    => "Teclat",
+    "backspc"   => "Tecla Retrocés"
 
   ];
 ?>
