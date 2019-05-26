@@ -255,6 +255,14 @@ Psy Shell v0.9.9 (PHP 7.3.5 — cli) by Justin Hileman
 >>> 
 ```
 
+#### Storage
+El contingut es guarda a /storage/app/public, però necessita un enllaç simbòlic a /public. Això es pot crear amb l'ordre:
+```console
+$ php artisan storage:link
+The [public/storage] directory has been linked.
+```
+
+
 ToDo - List
 ---
 - [ ] Documentació a .md
@@ -299,6 +307,10 @@ ToDo - List
     - [ ] Entrenament
       - [ ] Síl·labes
       - [ ] Paraules
+        - [ ] Obtenir llistat de paraules amb probabilitat ponderada
+          - [ ] en https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
+          - [x] es
+          - [ ] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
       - [ ] Text
   - [ ] Captació dades dels tests
   - [ ] Obtenció dades anònimes
