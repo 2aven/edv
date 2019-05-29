@@ -19,7 +19,7 @@
         $top = 0.5; break;
     }
 
-    $handle = fopen("edv/es/CREA_parcial.TXT","r");
+    $handle = fopen("CREA_parcial.TXT","r");
     $wordlist = [];
     if ($handle) {
       $acum = 0.00000000;
@@ -44,7 +44,8 @@
       fclose($handle);
     }
     
-    $file_result = fopen("edv/es/wl_sigma$sig-es.txt", "w");
+    // $file_result = fopen("edv/es/wl_sigma$sig-es.txt", "w");
+    $file_result = fopen("wl_sigma$sig-es.txt", "w");
     foreach ($wordlist as $n => $word) {
       $fline = $n+1 . "\t";
       foreach ($word as $pweight => $w) {

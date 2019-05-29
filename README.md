@@ -262,6 +262,8 @@ $ php artisan storage:link
 The [public/storage] directory has been linked.
 ```
 
+#### Fonts paraules, explicació sigmas
+
 
 ToDo - List
 ---
@@ -308,9 +310,9 @@ ToDo - List
       - [ ] Síl·labes
       - [ ] Paraules
         - [ ] Obtenir llistat de paraules amb probabilitat ponderada
-          - [ ] en https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
+          - [x] en https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
           - [x] es
-          - [ ] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
+          - [x] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
       - [ ] Text
   - [ ] Captació dades dels tests
   - [ ] Obtenció dades anònimes
