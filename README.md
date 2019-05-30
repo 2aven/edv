@@ -262,6 +262,22 @@ $ php artisan storage:link
 The [public/storage] directory has been linked.
 ```
 
+#### USER
+
+```console
+php artisan make:auth
+
+ The [layouts/app.blade.php] view already exists. Do you want to replace it? (yes/no) [no]:
+ > yes
+
+Authentication scaffolding generated successfully.
+```
+migrations:
+```php 
+            // ::: Privacy policy ? :::
+            // $table->string('email')->unique();
+```
+
 #### Fonts paraules, explicació sigmas
 
 
@@ -284,11 +300,13 @@ ToDo - List
   - [x] Taules SQL
 
 - [ ] Sistema de Login
-  - [ ] Login/Logout
+  - [x] Login/Logout
+    - [ ] Navbar: 'Toogle navigation' lang tag ?
+  - [x] Signin
+    - [x] Modificar Model DB - incloure username
+    - [ ] Verificar unique username
   - [ ] Dashboard - Basic info
-  - [ ] Modificar Model DB
-  - [ ] Signin
-  - [ ] Incloure Login al Navbar
+  - [x] Incloure Login al Navbar
   - [ ] Tunejar presentació
 
 - [x] Skills

@@ -73,7 +73,6 @@ class SkillConfController extends Controller
    */
   public function show($skill)
   {
-    //$userId = User::where('user',$user)->value('id');
     $userId     =   auth()->check() ? auth()->user()->id : 1;
     $skillConf  = $this->getSkillConf($userId,$skill); 
 
