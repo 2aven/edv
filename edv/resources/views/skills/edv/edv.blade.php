@@ -1,43 +1,20 @@
-<?php
-/**
- *  Sigmas :: 50% - 68.27% - 95.45% - 99.73% 
- * 129. :: además :: 82,576 :: 541.27 >> 49995021 ----- %%% 0.49995021
- * 1255. :: jornada :: 11,097 :: 72.73 >> 68265390 ----- %%% 0.68265390
- * 40031. :: empanada :: 162 :: 1.06 >> 95449991 ----- %%% 0.95449991
-*/
-
-  function getWordList($sigma = 1){
-    $handle = fopen("edv/es/wl_sigma$sigma-es.txt","r");
-    if ($handle) {
-      $wordlist = [];
-      while (($line = fgets($handle)) !== false) {
-        $cols = preg_split("/\s+/", $line);
-        array_push($wordlist,[$cols[1],$cols[2]]);
-      }
-    fclose($handle);
-
-    return $wordlist;
-
-    } else 
-      return 0;  // error opening the file.
-  }
-
-  // $n in getWordList --->>> from: Config
-  $wordlist = getWordList();
-?>
-
 @extends('layouts.app')
 @section('content')
 
-  <div class="jumb otron text-center">
-    <h1> {{ __('edv.title') }} </h1>
-    <p> {{ __('edv.slogan') }} </p>
-  </div>  
+<div class="jumb otron text-center">
+  <h1> {{ __('edv.title') }} </h1>
+  <p> {{ __('edv.slogan') }} </p>
+</div>  
+
+<div class="container d-flex justify-content-center">
+  <!-- Word & Input -->
+    <div class="row">
 
   <h1> WORD STREAM </h1>
+  <?php 
+    var_dump($vconf);
+  ?>
   
-  <!-- Word & Input -->
-  <div class="row">
     <div class="col-md-6 mx-auto">
       <p class="lead">Type The Given Word Within
         <span class="text-success" id="seconds">5</span> Seconds:</p>
@@ -71,11 +48,9 @@
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    const words = <?=json_encode($wordlist);?>;
-  </script>
-  <script src="edv/js/edv.js"></script>
-  
+<script src="edv/js/edv.js"></script>
+
 
 @endsection

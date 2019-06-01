@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
-  <div class="jumb otron text-center">
-    {{ var_dump($skillConf) }}
+  <div class="text-center">
     {{ Form::open(['action' => 'SkillConfController@store']) }}
       <div class="form-group">
-        <ul> @foreach (json_decode($skillConf) as $key => $conf)
+        <ul> @foreach ($vparam as $key => $options)
           <li>
-            {{ Form::label('title',__("$slug.$key")) }}
-            {{ Form::text('title',$conf,['class' => 'form-control', 'placeholder' => "$conf"])}}
+            {{ Form::label("$key",__("$slug.$key")) }}
+            {{ Form::select("$key",$options,$vconf[$key],['class' => 'form-control'])}}
           </li> @endforeach
         </ul>
       </div>
+      {{ Form::submit('Submit',['class' => 'btn btn-primary']) }}
     {{ Form::close() }}
   </div>
   

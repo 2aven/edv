@@ -16,7 +16,17 @@
     "method"    => "Mètode",
     "lang"      => "Llengua",
     "keymap"    => "Teclat",
-    "backspc"   => "Tecla Retrocés"
+    "backspc"   => "Tecla Retrocés",
 
+    "text_method" => "Mètode: Text",
+    "word_method" => "Mètode: Paraules",
+    "syllabic_method" => "Mètode: Síl·labes",
+    "ca_lang" => "Català",
+    "es_lang" => "Castellà",
+    "en_lang" => "Anglés",
+    "dv_keymap" => "Dvorak",
+    "querty_keymap" => "QUERTY",
+    "allow" => "Permés",
+    "disallow"  => "Bloquejat"
   ];
 ?>

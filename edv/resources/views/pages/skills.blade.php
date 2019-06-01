@@ -2,7 +2,13 @@
 
 @section('content')
 
+<div class="d-flex justify-content-center">
   @foreach ($skills as $skill)
+    @if (isset($messages["$skill->slug"]))
+      <div class="alert alert-success">
+      {{ $messages["$skill->slug"] }}
+      </div>  
+    @endif
     <div class="card w-75 bg-dark">
       <div class="card-body">
         <h3 class="card-title">{{ __("$skill->slug.name") }}</h3>
@@ -12,5 +18,6 @@
       </div>
     </div>      
   @endforeach
-    
+</div>
+
 @endsection

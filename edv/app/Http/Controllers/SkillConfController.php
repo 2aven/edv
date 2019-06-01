@@ -5,27 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SkillConf;
 use App\Skill;
+use App\Http\Controllers\SkillsController;
 
 class SkillConfController extends Controller
-{
+{ 
   /**
    * Get the configuration from the resource for specific user and skill.
    *
-   * @return \Illuminate\Http\Response
+   * @return Array
    */
-  private function getSkillConf($userId,$skill)
+  public function getSkillConf($userId,$skill)
   {
+    $skillId = Skill::select()->where('slug',$skill)->first()->skillId;
 
-    $skillId    =   Skill::select()->where('slug',$skill)->first()->skillId;
-
+    if ( ! SkillConf::select()->where('userId',$userId)->where('skillId',$skillId)->exists())
+      $userId=1;
+    
     $skillConf  =   SkillConf::select()
       ->where('userId',$userId)
       ->where('skillId',$skillId)
-      ->first()->vconf;
+      ->first();
       
-    return $skillConf;
+    return $skillConf->vconf;
   }
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -35,7 +38,7 @@ class SkillConfController extends Controller
   {
     $skillsConf = [];
     $skills = Skill::all();
-    $userId     =   auth()->check() ? auth()->user()->id : 1;
+    $userId = auth()->check() ? auth()->user()->id : 1;
     
     foreach($skills as $skill){
       $skillsConf[$skill->slug]= $this->getSkillConf($userId,$skill->slug);
@@ -62,7 +65,39 @@ class SkillConfController extends Controller
    */
   public function store(Request $request)
   {
-      return "so yes";
+    $messages=[];
+    $slug = 'edv'; //   !!!!! !!!! !!! !!! ! ! ! ! !
+    $skill = Skill::where('slug',$slug)->first();
+    $skillId=$skill->skillId;
+
+    $vparam = json_decode($skill->vparam,true);
+    $vconf=[];  $validArray=[];
+    foreach($vparam as $key => $options){
+      $validArray[$key] = 'required';
+      $vconf[$key] = $request->input("$key");
+    } 
+    $this->validate($request,$validArray);
+    $vconf = json_encode($vconf);
+    
+    
+
+
+    // If user is logged: save config in DB
+    if(auth()->check()){
+      $userId=auth()->user()->id;
+      
+      $skillConf = SkillConf::where('userId',$userId)->where('skillId',$skillId)->first();
+      $skillConf->userId  = $userId;
+      $skillConf->skillId = $skillId;
+      $skillConf->vconf   = $vconf;
+      $skillConf->save();
+
+      $messages['edv'] = "Saved";    // <<<<< ------ TRANSLATE THIS 
+    }
+    
+
+    
+    return view('pages.skills')->with(['skills'=>Skill::all(),'messages'=>$messages]);
   }
 
   /**
@@ -73,10 +108,18 @@ class SkillConfController extends Controller
    */
   public function show($skill)
   {
-    $userId     =   auth()->check() ? auth()->user()->id : 1;
-    $skillConf  = $this->getSkillConf($userId,$skill); 
+    $userId     = auth()->check() ? auth()->user()->id : 1;
+    
+    $vparam = json_decode(Skill::select()->where('slug',$skill)->first()->vparam,true);
+    foreach($vparam as $key => $options)
+      foreach ($options as $k => $o)
+        $vparam[$key][$k] = __("$skill.$o");
 
-    return view("skills.$skill.conf")->with(['skillConf' => $skillConf, 'slug' => $skill]);
+    return view("skills.$skill.conf")->with([
+      'vconf'   => json_decode($this->getSkillConf($userId,$skill),true), 
+      'vparam'  => $vparam,
+      'slug'    => $skill
+      ]);
   }
 
   /**

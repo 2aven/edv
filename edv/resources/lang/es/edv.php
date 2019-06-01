@@ -15,7 +15,18 @@
     "method"    => "Método",
     "lang"      => "Idioma",
     "keymap"    => "Teclado",
-    "backspc"   => "Tecla Retroceso"
+    "backspc"   => "Tecla Retroceso",
+
+    "text_method" => "Método: Texto",
+    "word_method" => "Método: Palabras",
+    "syllabic_method" => "Método: Sílabas",
+    "ca_lang" => "Catalán",
+    "es_lang" => "Español",
+    "en_lang" => "Inglés",
+    "dv_keymap" => "Dvorak",
+    "querty_keymap" => "QUERTY",
+    "allow" => "Permitir",
+    "disallow"  => "Bloquear"
 
   ];
 ?>

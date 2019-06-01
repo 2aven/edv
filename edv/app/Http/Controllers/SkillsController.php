@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Skill;
+use App\Http\Controllers\SkillConfController;
 
 class SkillsController extends Controller
 {
+
   /**
    * Display a listing of the resource.
    *
@@ -26,8 +28,10 @@ class SkillsController extends Controller
    */
   public function show($slug)
   {
-    $Skill = Skill::where('slug', $slug);
-    return view("skills.$slug.$slug");
+    $userId = auth()->check() ? auth()->user()->id : 1;
+    $vconf  = (new SkillConfController)->getSkillConf($userId,$slug);
+
+    return view("skills.$slug.$slug")->with('vconf',$vconf);
   }
   
   /**

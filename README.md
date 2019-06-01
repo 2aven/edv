@@ -186,10 +186,12 @@ En lloc d'usar SQL, usam el migrador amb aquesta info a database/migrations/*tim
   }
 ```
 EDIT: 
-El nom, com és subseptible a traducció, anirà a la pàgina junt amb el resta de la informació; elements direccionals com *ruta* o *imatge* només necessiten un **slug**, i la construcció del mòdul ha de respectar els noms dels arxius amb aquest format.
+El nom, com és subseptible a traducció, anirà a la pàgina junt amb el resta de la informació; elements direccionals com *ruta* o *imatge* només necessiten un **slug**, i la construcció del mòdul ha de respectar els noms dels arxius amb aquest format. 
+També s'ha inclòs el camp **vparam** que determina quines opcions es poden configurar, a partir del que després es genera l'administració de configuració (formulari).
 ```PHP
 //      $table->string('name', 191);  // The index key prefix length limit is 767 bytes for InnoDB tables that use the REDUNDANT or COMPACT row format. Assuming a utf8mb4 character set and the maximum of 4 bytes for each character: 191 * 4 = 764 (works).
       $table->string('slug', 24)->unique();   // Used as a construction parameter for 'route' and 'image'
+      $table->json('vparam');
 ```
 https://stackoverflow.com/questions/43832166/laravel-5-4-specified-key-was-too-long-why-the-number-191 
 
@@ -208,7 +210,7 @@ Migrating: 2019_05_19_103625_create_skills_table
 Migrated:  2019_05_19_103625_create_skills_table
 ```
 
-```console
+```sql
 Comprovació:
 
 MariaDB [(none)]> use edv
@@ -234,6 +236,7 @@ MariaDB [edv]> show columns from skills;
 | skillId    | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
 | name       | varchar(144)        | NO   |     | NULL    |                |
 | slug       | varchar(24)         | NO   |     | NULL    |                |
+| vparam     | longtext            | YES  |     | NULL    |                |
 | created_at | timestamp           | YES  |     | NULL    |                |
 | updated_at | timestamp           | YES  |     | NULL    |                |
 +------------+---------------------+------+-----+---------+----------------+
@@ -250,7 +253,9 @@ Psy Shell v0.9.9 (PHP 7.3.5 — cli) by Justin Hileman
 => "Entrenador Dvorak"
 >>> $skill->slug='edv';
 => "edv"
->>> $skill->save();
+>>> $skill->vparam='{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}' 
+=> "{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}"
+>> $skill->save();
 => true
 >>> 
 ```
@@ -274,11 +279,14 @@ Authentication scaffolding generated successfully.
 ```
 migrations:
 ```php 
-            // ::: Privacy policy ? :::
-            // $table->string('email')->unique();
+  // ::: Privacy policy ? :::
+  $table->string('email')->unique();
 ```
 
 #### Fonts paraules, explicació sigmas
+
+#### Models amb claus compostes:
+(see SkillConf Model)
 
 
 ToDo - List
@@ -304,22 +312,27 @@ ToDo - List
     - [ ] Navbar: 'Toogle navigation' lang tag ?
   - [x] Signin
     - [x] Modificar Model DB - incloure username
-    - [ ] Verificar unique username
-  - [ ] Dashboard - Basic info
+      - [x] Validar amb 'alpha_dash'
+    - [x] Verificar unique username
   - [x] Incloure Login al Navbar
+  - [ ] Dashboard - Basic info
+    - [ ] Carregar Config a la sessió (Anonim/Guest té els valors per defecte a la DB)
+  - [ ] Es manté la sessió entre canvis de idoma?
   - [ ] Tunejar presentació
 
 - [x] Skills
   - [x] Controlador
   - [x] Model DB
   - [x] Incorporar traducció
+  - [x] Incloure columna 'parameters' que conté arrays $key => $options per administrar via skillconf amb selects
 
 - [ ] Config :: Model-Controlador
   - [x] Model DB
-  - [ ] Controlador: S'ha de filtrar per usuari (sessió)
+  - [x] Controlador: S'ha de filtrar per usuari (sessió)
   - [x] Obtenció dades config
-  - [ ] Carregar Config a la sessió (Anonim té els valors per defecte a la DB)
-  - [ ] Formulari config -> Modifica les dades a la sessió i, si té usuari, les guarda a la DB
+  - [ ] Formulari config -> Modifica les dades...
+    - [ ] a la sessió 
+    - [x] si té usuari, les guarda a la DB
 
 - [ ] Skill EDV
   - [ ] Pagina principal edv:

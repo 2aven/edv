@@ -16,7 +16,18 @@
     "method"    => "Method",
     "lang"      => "Language",
     "keymap"    => "Keyboard Map",
-    "backspc"   => "Backspace Key"
+    "backspc"   => "Backspace Key",
+
+    "text_method" => "Method: Text",
+    "word_method" => "Method: Words",
+    "syllabic_method" => "Method: Syllabic",
+    "ca_lang" => "Catalan",
+    "es_lang" => "Spanish",
+    "en_lang" => "English",
+    "dv_keymap" => "Dvorak",
+    "querty_keymap" => "QUERTY",
+    "allow" => "Allowed",
+    "disallow"  => "Disallowed"
     
   ];
 ?>
