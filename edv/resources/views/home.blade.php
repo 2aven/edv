@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card bg-dark">
-        <div class="card-header">Dashboard</div>
+        <div class="card-header">{{ __("messages.dashboard")}}</div>
 
         <div class="card-body">
           @if (session('status'))
@@ -13,12 +13,7 @@
               {{ session('status') }}
             </div>
             @endif
-            <?php
-            echo " ::: Debugg ::: <br>";
-            var_dump(session()->all());
-            echo "<br> -------------- <br>";
-            ?>
-            You are logged in!
+            {{ __("messages.logged_in")}}
         </div>
       </div>
     </div>

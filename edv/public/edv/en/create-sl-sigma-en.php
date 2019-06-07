@@ -8,6 +8,9 @@
  * |36663|zoetrope  ::      7.91134 >>      824355265.77817 ----- 0.82435526 %%% 0.86365140
  * 
 */
+
+include '../phpSyllable-master/src/Syllable.php';
+
   function createWeightedList_en($sig = 0){
     echo "\n\n : : : \t Sigma $sig \t : : : \n\n";
     switch ($sig) {
@@ -27,12 +30,15 @@
 
     $handle = fopen("EN_PG.TXT","r");
     $wordlist = [];
+    $sylist = [];
+
     if ($handle) {
       $acum = 0.00000000;
       $perbillion = 0.00000000;
       while ((($line = fgets($handle)) !== false)) {
 
         $cols = preg_split("/\s+/", $line);
+
 
         
         $acum += (float)$cols[2];
@@ -52,21 +58,25 @@
       fclose($handle);
     }
     
-    $file_result = fopen("wl_sigma$sig-en.txt", "w");
-    foreach ($wordlist as $n => $word) {
-      $fline = $n+1 . "\t";
-      foreach ($word as $pweight => $w) {
+    // $file_result = fopen("sl_sigma$sig-en.txt", "w");
+    // foreach ($wordlist as $n => $word) {
+    //   $fline = $n+1 . "\t";
+    //   foreach ($word as $pweight => $w) {
         
-        $fline .= $pweight ."\t".$w."\n";
-      }
-      fwrite($file_result, $fline);
-    }
-    fclose($file_result);
+    //     $fline .= $pweight ."\t".$w."\n";
+    //   }
+    //   fwrite($file_result, $fline);
+    // }
+    // fclose($file_result);
 
-    return $wordlist;
+    return $sylist;
   }
 
-  for($i=0;$i<4;$i++)
-    $words = createWeightedList_en($i);
+
+  $sylist=createWeightedList_en(0);
+  foreach($sylist as $syl => $n)
+    echo "$syl : \t$n \n";
+  // for($i=0;$i<4;$i++)
+  //   $words = createWeightedList_en($i);
 
 ?>

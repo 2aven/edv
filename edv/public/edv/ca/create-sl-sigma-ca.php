@@ -2,7 +2,7 @@
 /**
  *  Sigmas :: 50% - 68.27% - 95.45% - 99.73% 
 */
-  function createWeightedList_ca($sig = 0){
+  function createWeightedList_es($sig = 0){
     echo "\n\n : : : \t Sigma $sig \t : : : \n\n";
     switch ($sig) {
       case 0:
@@ -19,6 +19,7 @@
 
     $handle = fopen("CAT_TAB.TXT","r");
     $wordlist = [];
+    $sylist = [];
     if ($handle) {
       $acum = 0.00000000;
       while ((($line = fgets($handle)) !== false)) {
@@ -60,6 +61,6 @@
   }
 
   for($i=0;$i<4;$i++)
-    $words = createWeightedList_ca($i);
+    $words = createWeightedList_es($i);
 
 ?>

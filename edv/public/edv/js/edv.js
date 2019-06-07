@@ -1,99 +1,88 @@
 window.addEventListener('load', init);
 
-// Globals
+let vresults = new Array();
+let nword = ppm = pacum = t = time = seconds = minutes = dec = 0;
+let word = "";
+let lastword = 144;
+let training = chronometer = false;
 
-// Available Levels
-const levels = {
-  easy: 12,
-  medium: 6,
-  hard: 3
-};
+let wordInput = document.getElementById('word-input');
 
-// To change level
-const currentLevel = levels.easy;
-
-let time = currentLevel;
-let score = 0;
-let isPlaying;
-
-// DOM Elements
-const wordInput = document.querySelector('#word-input');
-const currentWord = document.querySelector('#current-word');
-const scoreDisplay = document.querySelector('#score');
-const timeDisplay = document.querySelector('#time');
-const message = document.querySelector('#message');
-const seconds = document.querySelector('#seconds');
-
-
-// Initialize Game
 function init() {
-  // Show number of seconds in UI
-  seconds.innerHTML = currentLevel;
-  // Load word from array
-  showWord(words);
-  // Start matching on word input
-  wordInput.addEventListener('input', startMatch);
-  // Call countdown every second
-  setInterval(countdown, 1000);
-  // Check game status
-  setInterval(checkStatus, 50);
+  wordInput  = document.getElementById('word-input');
+
+  word = $(`#w-${nword}`).text();
+  $('#current-word').text(word);
+  $('#word-input').on("keyup",function (evt) {
+    if (evt.which=='32') {
+      nextWord(this.value);
+    } else writing(this.value);
+  });
+  wordInput.addEventListener("change", function (evt) {
+    nextWord(this.value);
+    this.value = ""; });
 }
 
-// Start match
-function startMatch() {
-  if (matchWords()) {
-    isPlaying = true;
-    time = currentLevel + 1;
-    showWord(words);
-    wordInput.value = '';
-    score++;
-  }
-
-  // If score is -1, display 0
-  if (score === -1) {
-    scoreDisplay.innerHTML = 0;
-  } else {
-    scoreDisplay.innerHTML = score;
-  }
+function writing(wordstream){
+  if (!training) startTraining();
+  $('#wlog').text(wordstream);
 }
 
-// Match currentWord to wordInput
-function matchWords() {
-  if (wordInput.value === currentWord.innerHTML) {
-    message.innerHTML = 'Correct!!!';
-    return true;
-  } else {
-    message.innerHTML = '';
-    return false;
-  }
+function startTraining() {
+  if (chronometer) resetChrono();
+  resetPPM();
+  chronometer = setInterval(chrono,100);
+  training = true;
+}
+function endTraining(){
+  clearInterval(chronometer);
+  training = false;
+  // << disable word-input
+  // << show results
 }
 
-// Pick & show random word
-function showWord(words) {
-  // Generate random array index
-  const randIndex = Math.floor(Math.random() * words.length);
-  // Output random word
-  currentWord.innerHTML = words[randIndex];
+function nextWord(value){
+  entryword = value.trim();
+
+  pacum += entryword.length; // decide word/entryword .length (depens on character treatment)
+  ppm = pacum*(600/t);
+  // console.log(`pacum ${pacum} \t t: ${t}\n ppm: ${ppm}`);
+  $("#ppm").text(`${Math.round(ppm*100)/100} ppm`);
+
+  if (word.trim() == entryword) $('#wlog').text("·");
+  else $('#wlog').text(`${word} X ${entryword}`);
+
+  $(`#w-${nword}`).addClass("text-muted");
+  nword++;
+  if (nword<lastword){
+    word = $(`#w-${nword}`).text();
+    $('#current-word').text(word);
+    $('#word-input').val("");
+  } else endTraining();
 }
 
-// Countdown timer
-function countdown() {
-  // Make sure time is not run out
-  if (time > 0) {
-    // Decrement
-    time--;
-  } else if (time === 0) {
-    // Game is over
-    isPlaying = false;
+function chrono() {
+  t++; dec++;
+  if (dec > 9) {
+    dec = 0;
+    seconds++;
   }
-  // Show time
-  timeDisplay.innerHTML = time;
+  if (seconds > 59) {
+    seconds = 0;
+    minutes++;
+  }
+
+  time = ((minutes < 10)?`0${minutes}`:`${minutes}`)
+      + ((seconds < 10)?`:0${seconds}`:`:${seconds}`)
+      + `.${dec}`;
+  $("#time").text(time);
 }
 
-// Check game status
-function checkStatus() {
-  if (!isPlaying && time === 0) {
-    message.innerHTML = 'Game Over!!!';
-    score = -1;
-  }
+function resetChrono() {
+  t = minutes = seconds = dec = 0;
+  $("#time").text(`00:00.0`);
+}
+function resetPPM() {
+  ppm = 0;
+  $("#ppm").text(`0`);
 }

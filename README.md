@@ -288,6 +288,8 @@ migrations:
 #### Models amb claus compostes:
 (see SkillConf Model)
 
+#### JS Script:
+Necessita @stack al app.layout i s'injecta usant @push a la plantilla del skill
 
 ToDo - List
 ---
@@ -330,17 +332,23 @@ ToDo - List
   - [x] Model DB
   - [x] Controlador: S'ha de filtrar per usuari (sessió)
   - [x] Obtenció dades config
-  - [ ] Formulari config -> Modifica les dades...
-    - [ ] a la sessió 
+  - [x] Formulari config -> Modifica les dades...
+    - [x] GUEST: a la sessió 
     - [x] si té usuari, les guarda a la DB
+    - [ ] Inc. sigma
+  - [ ] Estètica
 
 - [ ] Skill EDV
   - [ ] Pagina principal edv:
     - [ ] Test
     - [ ] Entrenament
       - [ ] Síl·labes
+      - [ ] Obtenir llistat de síl·labes amb probabilitat ponderada
+          - [ ] en 
+          - [ ] es
+          - [ ] ca 
       - [ ] Paraules
-        - [ ] Obtenir llistat de paraules amb probabilitat ponderada
+        - [x] Obtenir llistat de paraules amb probabilitat ponderada
           - [x] en https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
           - [x] es
           - [x] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
