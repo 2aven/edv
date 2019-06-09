@@ -1,6 +1,6 @@
 window.addEventListener('load', init);
 
-let vresults = new Array();
+let vresults = { "t":0, "pacum":0, "wrong": [] };
 let nword = ppm = pacum = t = time = seconds = minutes = dec = 0;
 let word = "";
 let lastword = 144;
@@ -10,22 +10,17 @@ let wordInput = document.getElementById('word-input');
 
 function init() {
   wordInput  = document.getElementById('word-input');
-
+  
   word = $(`#w-${nword}`).text();
   $('#current-word').text(word);
-  $('#word-input').on("keyup",function (evt) {
-    if (evt.which=='32') {
-      nextWord(this.value);
-    } else writing(this.value);
+  $('#word-input').on("keydown",function (evt) {
+    if (evt.which=='32') nextWord(this.value);
   });
-  wordInput.addEventListener("change", function (evt) {
-    nextWord(this.value);
-    this.value = ""; });
-}
-
-function writing(wordstream){
-  if (!training) startTraining();
-  $('#wlog').text(wordstream);
+  $('#word-input').on("keyup",function (evt) {
+    if (!training) startTraining();
+  });
+  // Not working on jQuery: using DOM element
+  wordInput.addEventListener("change", function (evt) { nextWord(this.value); });
 }
 
 function startTraining() {
@@ -35,22 +30,30 @@ function startTraining() {
   training = true;
 }
 function endTraining(){
+  $('#word-input').prop("disabled",true);
   clearInterval(chronometer);
   training = false;
-  // << disable word-input
-  // << show results
+
+  vresults['t']=t; vresults['pacum']=pacum;
+  $('#vresults').val(JSON.stringify(vresults));
+  $('#stadistics').submit();
 }
 
 function nextWord(value){
   entryword = value.trim();
 
-  pacum += entryword.length; // decide word/entryword .length (depens on character treatment)
+  pacum += entryword.length;
   ppm = pacum*(600/t);
-  // console.log(`pacum ${pacum} \t t: ${t}\n ppm: ${ppm}`);
   $("#ppm").text(`${Math.round(ppm*100)/100} ppm`);
 
-  if (word.trim() == entryword) $('#wlog').text("·");
-  else $('#wlog').text(`${word} X ${entryword}`);
+  if (word.trim() == entryword) {
+    $('#wlog').text("·");
+  } 
+  else {
+    vresults.wrong.push([word,entryword]);
+    console.log(vresults);
+    $('#wlog').text(`${word} X ${entryword}`);
+  } 
 
   $(`#w-${nword}`).addClass("text-muted");
   nword++;

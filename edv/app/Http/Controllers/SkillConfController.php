@@ -27,6 +27,13 @@ class SkillConfController extends Controller
       ->where('userId',$userId)
       ->where('skillId',$skillId)
       ->first();
+
+    // case: user has no config defined yet, gets from Guest 'default'
+    if (!$skillConf)
+      $skillConf  =   SkillConf::select()
+        ->where('userId',1)
+        ->where('skillId',$skillId)
+        ->first();
       
     return $skillConf->vconf;
   }
@@ -71,9 +78,8 @@ class SkillConfController extends Controller
     $skill = Skill::where('slug',$slug)->first();
     $skillId=$skill->skillId;
 
-    $vparam = json_decode($skill->vparam,true);
     $vconf=[];  $validArray=[];
-    foreach($vparam as $key => $options){
+    foreach($request->input() as $key => $options){
       $validArray[$key] = 'required';
       $vconf[$key] = $request->input("$key");
     } 
@@ -86,6 +92,8 @@ class SkillConfController extends Controller
       $userId=auth()->user()->id;
       
       $skillConf = SkillConf::where('userId',$userId)->where('skillId',$skillId)->first();
+      if (!$skillConf) $skillConf = new SkillConf;
+      
       $skillConf->userId  = $userId;
       $skillConf->skillId = $skillId;
       $skillConf->vconf   = $vconf;
@@ -109,14 +117,8 @@ class SkillConfController extends Controller
    */
   public function show($skill)
   {    
-    $vparam = json_decode(Skill::select()->where('slug',$skill)->first()->vparam,true);
-    foreach($vparam as $key => $options)
-      foreach ($options as $k => $o)
-        $vparam[$key][$k] = __("$skill.$o");
-
     return view("skills.$skill.conf")->with([
       'vconf'   => json_decode($this->getSkillConf($skill),true), 
-      'vparam'  => $vparam,
       'slug'    => $skill
       ]);
   }

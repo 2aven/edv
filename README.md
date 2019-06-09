@@ -197,10 +197,9 @@ https://stackoverflow.com/questions/43832166/laravel-5-4-specified-key-was-too-l
 
 
 #### Migrate:: 
-(REPETIBLE QUAN HI HAGI TOTES LES DB MONTADES)
 
 ```console
-ariany@GLaDOS:~/PFC/edv$ php artisan migrate
+root@76b63666f7c5:/var/www/html# php artisan migrate -v
 Migration table created successfully.
 Migrating: 2014_10_12_000000_create_users_table
 Migrated:  2014_10_12_000000_create_users_table
@@ -208,6 +207,11 @@ Migrating: 2014_10_12_100000_create_password_resets_table
 Migrated:  2014_10_12_100000_create_password_resets_table
 Migrating: 2019_05_19_103625_create_skills_table
 Migrated:  2019_05_19_103625_create_skills_table
+Migrating: 2019_05_19_192712_create_skill_conf_table
+Migrated:  2019_05_19_192712_create_skill_conf_table
+Migrating: 2019_06_09_082855_create_coffrets_table
+Migrated:  2019_06_09_082855_create_coffrets_table
+
 ```
 
 ```sql
@@ -222,42 +226,91 @@ MariaDB [edv]> show tables;
 +-----------------+
 | Tables_in_edv   |
 +-----------------+
+| coffrets        |
 | migrations      |
 | password_resets |
+| skill_confs     |
 | skills          |
 | users           |
 +-----------------+
-4 rows in set (0.000 sec)
+6 rows in set (0.000 sec)
 
 MariaDB [edv]> show columns from skills;
 +------------+---------------------+------+-----+---------+----------------+
 | Field      | Type                | Null | Key | Default | Extra          |
 +------------+---------------------+------+-----+---------+----------------+
 | skillId    | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
-| name       | varchar(144)        | NO   |     | NULL    |                |
-| slug       | varchar(24)         | NO   |     | NULL    |                |
-| vparam     | longtext            | YES  |     | NULL    |                |
+| slug       | varchar(24)         | NO   | UNI | NULL    |                |
 | created_at | timestamp           | YES  |     | NULL    |                |
 | updated_at | timestamp           | YES  |     | NULL    |                |
 +------------+---------------------+------+-----+---------+----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [edv]> show columns from skill_confs;
++------------+---------------------+------+-----+---------+-------+
+| Field      | Type                | Null | Key | Default | Extra |
++------------+---------------------+------+-----+---------+-------+
+| userId     | bigint(20) unsigned | NO   | PRI | NULL    |       |
+| skillId    | bigint(20) unsigned | NO   | PRI | NULL    |       |
+| vconf      | longtext            | NO   |     | NULL    |       |
+| created_at | timestamp           | YES  |     | NULL    |       |
+| updated_at | timestamp           | YES  |     | NULL    |       |
++------------+---------------------+------+-----+---------+-------+
 5 rows in set (0.001 sec)
+
+MariaDB [edv]> show columns from coffrets;
++------------+---------------------+------+-----+---------+----------------+
+| Field      | Type                | Null | Key | Default | Extra          |
++------------+---------------------+------+-----+---------+----------------+
+| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| userId     | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| skillId    | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| vdata      | longtext            | NO   |     | NULL    |                |
+| created_at | timestamp           | YES  |     | NULL    |                |
+| updated_at | timestamp           | YES  |     | NULL    |                |
++------------+---------------------+------+-----+---------+----------------+
+6 rows in set (0.001 sec)
+
+MariaDB [edv]> show columns from users;
++-------------------+---------------------+------+-----+---------+----------------+
+| Field             | Type                | Null | Key | Default | Extra          |
++-------------------+---------------------+------+-----+---------+----------------+
+| id                | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| user              | varchar(255)        | NO   | UNI | NULL    |                |
+| email             | varchar(255)        | NO   | UNI | NULL    |                |
+| name              | varchar(255)        | NO   |     | NULL    |                |
+| email_verified_at | timestamp           | YES  |     | NULL    |                |
+| password          | varchar(255)        | NO   |     | NULL    |                |
+| remember_token    | varchar(100)        | YES  |     | NULL    |                |
+| created_at        | timestamp           | YES  |     | NULL    |                |
+| updated_at        | timestamp           | YES  |     | NULL    |                |
++-------------------+---------------------+------+-----+---------+----------------+
+9 rows in set (0.001 sec)
 ```
 #### Artisan-tinker
+
+REVISAR CONTINGUT VCONF
+
 ```console
-ariany@GLaDOS:~/PFC/edv$ docker exec -it pfc_edv-web_1 console 
+ariany@GLaDOS:~/PFC/edv$ docker exec -it pfc_edv-web_1 bash 
 root@76b63666f7c5:/var/www/html# php artisan tinker
 Psy Shell v0.9.9 (PHP 7.3.5 — cli) by Justin Hileman
 >>> $skill = new App\Skill();
-=> App\Skill {#2937}
->>> $skill->name='Entrenador Dvorak';
-=> "Entrenador Dvorak"
+=> App\Skill {#2965}
 >>> $skill->slug='edv';
 => "edv"
->>> $skill->vparam='{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}' 
-=> "{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}"
->> $skill->save();
+>>> $skill->save();
 => true
->>> 
+>>> $sc = new App\SkillConf();
+=> App\SkillConf {#2965}
+>>> $sc->userId=1;
+=> 1
+>>> $sc->skillId=1;
+=> 1
+>>> $sc->vconf='{"method":"word","lang":"es","keymap":"dv","backspc":"yes"}';
+=> "{"method":"word","lang":"es","keymap":"dv","backspc":"yes"}"
+>>> $sc->save();
+=> true
 ```
 
 #### Storage
@@ -290,6 +343,38 @@ migrations:
 
 #### JS Script:
 Necessita @stack al app.layout i s'injecta usant @push a la plantilla del skill
+
+#### config.blade.php
+Model inicial tancat::
+```php
+@extends('layouts.app')
+@section('content')
+
+  <div class="text-center">
+    {{ Form::open(['action' => 'SkillConfController@store']) }}
+      <div class="form-group">
+        <ul> @foreach ($vparam as $key => $options)
+          <li>
+            {{ Form::label("$key",__("$slug.$key")) }}
+            {{ Form::select("$key",$options,$vconf[$key],['class' => 'form-control'])}}
+          </li> @endforeach
+        </ul>
+      </div>
+      {{ Form::submit('Submit',['class' => 'btn btn-primary']) }}
+    {{ Form::close() }}
+  </div>
+@endsection
+```
+Al Tinker...
+```php
+>>> $skill->vparam='{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}' 
+=> "{"method":{"text":"text_method","word":"word_method","syl":"syllabic_method"},"lang":{"ca":"ca_lang","es":"es_lang","en":"en_lang"},"keymap":{"dv":"dv_keymap","querty":"querty_keymap"},"backspc":{"yes":"allow","no":"disallow"}}"
+```
+Necessita que la base de dades tingui un llistat de les opcions, però només utilitza 'select'. S'ha descartat per no limitar la confiugració a posibles skills posteriors.
+Posterior canvi a model obert
+
+
+
 
 ToDo - List
 ---
@@ -342,19 +427,28 @@ ToDo - List
   - [ ] Pagina principal edv:
     - [ ] Test
     - [ ] Entrenament
+      - [x] Comportament del torrent de paraules
       - [ ] Síl·labes
-      - [ ] Obtenir llistat de síl·labes amb probabilitat ponderada
+        - [ ] Obtenir llistat de síl·labes amb probabilitat ponderada
           - [ ] en 
           - [ ] es
           - [ ] ca 
-      - [ ] Paraules
+      - [x] Paraules
         - [x] Obtenir llistat de paraules amb probabilitat ponderada
           - [x] en https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
           - [x] es
           - [x] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
       - [ ] Text
-  - [ ] Captació dades dels tests
-  - [ ] Obtenció dades anònimes
+  - [x] Captació dades dels tests
+    - [ ] skills/store => Coffert
+  - [ ] Obtenció dades usuari / anònimes <= Coffert
+
+- [ ] Banc de dades
+  - [ ] Model: Coffert
+  - [ ] CoffertController
+    - [x] Escritura 
+    - [ ] Lectura
+  - [x] Migració a base de dades
   
 - [ ]: Pendent (n:prioritat)
 - [0]: Realitzat

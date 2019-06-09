@@ -16,6 +16,7 @@ Route::get('/about', 'PagesController@about');
 
 Route::resource('skills','SkillsController');
 Route::resource('skillsconf','SkillConfController');
+Route::resource('coffret','CoffretController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
