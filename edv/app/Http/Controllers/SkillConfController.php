@@ -78,14 +78,7 @@ class SkillConfController extends Controller
     $skill = Skill::where('slug',$slug)->first();
     $skillId=$skill->skillId;
 
-    $vconf=[];  $validArray=[];
-    foreach($request->input() as $key => $options){
-      $validArray[$key] = 'required';
-      $vconf[$key] = $request->input("$key");
-    } 
-    $this->validate($request,$validArray);
-    $vconf = json_encode($vconf);
-    
+    $vconf = json_encode($request->input());
     
     // If user is logged: save config in DB
     if(auth()->check()){

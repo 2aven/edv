@@ -16,7 +16,9 @@
     "method"    => "Mètode",
     "lang"      => "Llengua",
     "keymap"    => "Teclat",
-    "backspc"   => "Tecla Retrocés",
+    "sigma"     => "Sigma (rang del vocabulàri)",
+    "reptwords" => "Permét la repetició de paraules",
+    "backspc"   => "Bloqueja la tecla Retrocés",
 
     "text_method" => "Mètode: Text",
     "word_method" => "Mètode: Paraules",
@@ -26,7 +28,10 @@
     "en_lang" => "Anglés",
     "dv_keymap" => "Dvorak",
     "querty_keymap" => "QUERTY",
-    "allow" => "Permés",
-    "disallow"  => "Bloquejat"
+    "sigma_0" => "(P<50%) 32 paraules",
+    "sigma_1" => "(P<68.27%) 303 paraules",
+    "sigma_2" => "(P<95.45%) 4760 paraules",
+    "sigma_3" => "(P<99.73%) 8001 paraules"
+  
   ];
 ?>

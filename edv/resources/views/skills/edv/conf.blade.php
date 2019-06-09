@@ -28,13 +28,22 @@
                 "querty" => __("edv.querty_keymap")
                 ], $vconf['keymap'],['class' => 'form-control'])}}
           </li>
+          {{ Form::label("sigma",__("edv.sigma")) }}
+          {{ Form::select("sigma", [
+              "0" => __("edv.sigma_0"),
+              "1" => __("edv.sigma_1"),
+              "2" => __("edv.sigma_2"),
+              "3" => __("edv.sigma_3")
+              ], $vconf['sigma'],['class' => 'form-control'])}}
+          </li>
           <li>
+            {{ Form::checkbox("reptwords", "true" , array_key_exists("reptwords",$vconf) )}}
+            {{ Form::label("reptwords",__("edv.reptwords")) }}
+          </li>
+          <li>
+            {{ Form::checkbox("backspc", "true" , array_key_exists("backspc",$vconf) )}}
             {{ Form::label("backspc",__("edv.backspc")) }}
-            {{ Form::select("backspc", [
-                "yes" => __("edv.allow"),
-                "no"  => __("edv.disallow")
-                ], $vconf['backspc'],['class' => 'form-control'])}}
-          </li>          
+          </li>
         </ul>
       </div>
       {{ Form::submit('Submit',['class' => 'btn btn-primary']) }}

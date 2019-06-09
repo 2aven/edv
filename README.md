@@ -405,13 +405,12 @@ ToDo - List
   - [ ] Dashboard - Basic info
     - [ ] Carregar Config a la sessió (Anonim/Guest té els valors per defecte a la DB)
   - [ ] Es manté la sessió entre canvis de idoma?
-  - [ ] Tunejar presentació
 
 - [x] Skills
   - [x] Controlador
   - [x] Model DB
   - [x] Incorporar traducció
-  - [x] Incloure columna 'parameters' que conté arrays $key => $options per administrar via skillconf amb selects
+  - [x] Show returns view with -> config 
 
 - [ ] Config :: Model-Controlador
   - [x] Model DB
@@ -420,11 +419,19 @@ ToDo - List
   - [x] Formulari config -> Modifica les dades...
     - [x] GUEST: a la sessió 
     - [x] si té usuari, les guarda a la DB
-    - [ ] Inc. sigma
-  - [ ] Estètica
+    - [x] Inc. sigma
+    - [x] paraules amb repetició
+    - [x] backspace -> check
 
 - [ ] Skill EDV
   - [ ] Pagina principal edv:
+    - [x] correcció: SkillsController show  ==> edv.php
+    - [ ] Modificar depenent de la configuració
+      - [x] Idioma
+      - [x] Sigma
+      - [x] Repetició
+      - [ ] Imatge del teclat en pantalla
+      - [ ] Comportament Backspace
     - [ ] Test
     - [ ] Entrenament
       - [x] Comportament del torrent de paraules
@@ -440,7 +447,7 @@ ToDo - List
           - [x] ca https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Catalan
       - [ ] Text
   - [x] Captació dades dels tests
-    - [ ] skills/store => Coffert
+    - [x] coffert/store
   - [ ] Obtenció dades usuari / anònimes <= Coffert
 
 - [ ] Banc de dades

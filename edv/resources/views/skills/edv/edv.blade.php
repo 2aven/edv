@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('content')
 
+@section('content')
 <div class="jumb otron text-center">
   <h1> {{ __('edv.title') }} </h1>
   <p> {{ __('edv.slogan') }} </p>
@@ -10,7 +10,7 @@
   
   <div class="row">
     <div class="col-md-6 mx-auto text-justify">
-      @foreach ($wordlist as $w => $word)
+      @foreach (wordRecruiter($vconf) as $w => $word)
       <span class="word-stream" id="w-{{$w}}">{{$word}}</span>
       @endforeach
     </div>
@@ -64,3 +64,38 @@
 @endpush
 
 @endsection
+@php
+
+  /**
+   * Returs Wordlist array
+   * 
+  **/
+  
+  function wordRecruiter($vconf){
+    // Get Word-List (method,lang)
+    $file = "edv/".$vconf['lang']."/wl_sigma".$vconf['sigma']."-".$vconf['lang'].".txt";
+    $lines = file($file);
+    $nlines = count($lines);
+    $repeatable = array_key_exists("reptwords",$vconf);
+    $wordlist = [];
+
+    $top = (($nlines<144) && !$repeatable) ?
+      $nlines : 144;
+
+    for($i=0;$i<$top;$i++){
+      $random = rand(0,100000000)/100000000;
+
+      //  Search apropiate pondered index: lineal search (since prob. density is inverse)
+      for($n=1;$n<$nlines;$n++){
+        $line = preg_split("/\s+/",$lines[$n]);
+        if ($random >= (float)$line[1]) continue;
+        if (!$repeatable && in_array($line[2],$wordlist)) continue;
+
+        $wordlist[] = $line[2];
+        break;
+      }
+    }
+
+  return $wordlist;
+  }
+@endphp

@@ -15,7 +15,9 @@
     "method"    => "Método",
     "lang"      => "Idioma",
     "keymap"    => "Teclado",
-    "backspc"   => "Tecla Retroceso",
+    "sigma"     => "Sigma (rango del vocabulario)",
+    "reptwords" => "Permite repetición de palabras",
+    "backspc"   => "Bloquea la tecla Retroceso",
 
     "text_method" => "Método: Texto",
     "word_method" => "Método: Palabras",
@@ -25,8 +27,10 @@
     "en_lang" => "Inglés",
     "dv_keymap" => "Dvorak",
     "querty_keymap" => "QUERTY",
-    "allow" => "Permitir",
-    "disallow"  => "Bloquear"
-
+    "sigma_0" => "(P<50%) 130 palabras",
+    "sigma_1" => "(P<68.27%) 1256 palabras",
+    "sigma_2" => "(P<95.45%) 40032 palabras",
+    "sigma_3" => "(P<99.73%) 71119 palabras"
+    
   ];
 ?>

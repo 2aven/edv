@@ -16,7 +16,9 @@
     "method"    => "Method",
     "lang"      => "Language",
     "keymap"    => "Keyboard Map",
-    "backspc"   => "Backspace Key",
+    "sigma"     => "Sigma (vocabulary range)",
+    "reptwords" => "Allow repeat words",
+    "backspc"   => "Block Backspace key",
 
     "text_method" => "Method: Text",
     "word_method" => "Method: Words",
@@ -26,8 +28,10 @@
     "en_lang" => "English",
     "dv_keymap" => "Dvorak",
     "querty_keymap" => "QUERTY",
-    "allow" => "Allowed",
-    "disallow"  => "Disallowed"
+    "sigma_0" => "(P<50%) 177 words",
+    "sigma_1" => "(P<68.27%) 1635 words",
+    "sigma_2" => "(P<95.45%) 6769 words",
+    "sigma_3" => "(P<99.73%) 36664 words"
     
   ];
 ?>

@@ -26,37 +26,10 @@ class SkillsController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($slug)
+  public function show($slug) 
   {
     $vconf  = json_decode((new SkillConfController)->getSkillConf($slug),true);
-
-    // Get Word-List (method,lang)
-    $file = 'edv/en/wl_sigma1-en.txt';
-    $lines = file($file);
-    $wordlist = [];
-    for($i=0;$i<144;$i++){
-      $random = rand(0,100000000)/100000000;
-      //  Search apropiate pondered index: lineal search (since prob. density is inverse)
-      $n = count($lines);
-      $index = 1;
-
-      for($n=1;$n<count($lines);$n++){
-        $line = preg_split("/\s+/",$lines[$n]);
-        if ($random >= (float)$line[1]){
-          continue;
-        }
-        $wordlist[] = $line[2];
-        break;
-      }
-
-      // if ($rand == $)
-      
-
-    }
-
-    // 
-
-    return view("skills.$slug.$slug")->with('wordlist',$wordlist);
+    return view("skills.$slug.$slug")->with('vconf',$vconf);
   }
   
   /**
