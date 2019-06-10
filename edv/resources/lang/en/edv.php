@@ -28,10 +28,19 @@
     "en_lang" => "English",
     "dv_keymap" => "Dvorak",
     "querty_keymap" => "QUERTY",
-    "sigma_0" => "(P<50%) 177 words",
-    "sigma_1" => "(P<68.27%) 1635 words",
-    "sigma_2" => "(P<95.45%) 6769 words",
-    "sigma_3" => "(P<99.73%) 36664 words"
+    "sigma_0" => "P < 50%", // 177 words",
+    "sigma_1" => "P < 68.27%",  // 1635 words",
+    "sigma_2" => "P < 95.45%",  // 6769 words",
+    "sigma_3" => "P < 99.73%",  // 36664 words",
+
+    //:: Analytics/Results Page ::
+    "statistics"  => "Statistics",
+    "results"     => "Results",
+    "ppm"         => "ppm",
+    "ppmin"       => "Pulsations per minute",
+    "wrongs"      => "Wrong words",
+    "skillbtn"    => "Test",
+    "coffretbtn"  => "Statistics"
     
   ];
 ?>

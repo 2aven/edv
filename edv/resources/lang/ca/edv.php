@@ -28,10 +28,19 @@
     "en_lang" => "Anglés",
     "dv_keymap" => "Dvorak",
     "querty_keymap" => "QUERTY",
-    "sigma_0" => "(P<50%) 32 paraules",
-    "sigma_1" => "(P<68.27%) 303 paraules",
-    "sigma_2" => "(P<95.45%) 4760 paraules",
-    "sigma_3" => "(P<99.73%) 8001 paraules"
+    "sigma_0" => "P < 50% ",  // 32 paraules",
+    "sigma_1" => "P < 68.27%", // 303 paraules",
+    "sigma_2" => "P < 95.45%", // 4760 paraules",
+    "sigma_3" => "P < 99.73%", // 8001 paraules",
+
+    //:: Analytics/Results Page ::
+    "statistics"  => "Estadístiques",
+    "results"     => "Resultats",
+    "ppm"         => "ppm",
+    "ppmin"       => "Pulsacions per minut",
+    "wrongs"      => "Paràules errònies",
+    "skillbtn"    => "Test",
+    "coffretbtn"  => "Estadístiques"
   
   ];
 ?>

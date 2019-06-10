@@ -14,6 +14,7 @@ function init() {
   word = $(`#w-${nword}`).text();
   $('#current-word').text(word);
   $('#word-input').on("keydown",function (evt) {
+    if (!training) startTraining();
     if (evt.which=='32') nextWord(this.value);
   });
   $('#word-input').on("keyup",function (evt) {
@@ -42,20 +43,16 @@ function endTraining(){
 function nextWord(value){
   entryword = value.trim();
 
-  pacum += entryword.length;
-  ppm = pacum*(600/t);
-  $("#ppm").text(`${Math.round(ppm*100)/100} ppm`);
-
   if (word.trim() == entryword) {
-    $('#wlog').text("·");
-  } 
-  else {
+    pacum += entryword.length;
+    ppm = pacum*(600/t);
+    $("#ppm").text(`${Math.round(ppm*100)/100} ppm`);
+  } else {
     vresults.wrong.push([word,entryword]);
-    console.log(vresults);
-    $('#wlog').text(`${word} X ${entryword}`);
+    $(`#w-${nword}`).css("text-decoration","line-through");
   } 
-
   $(`#w-${nword}`).addClass("text-muted");
+
   nword++;
   if (nword<lastword){
     word = $(`#w-${nword}`).text();

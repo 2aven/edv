@@ -373,7 +373,35 @@ Al Tinker...
 Necessita que la base de dades tingui un llistat de les opcions, però només utilitza 'select'. S'ha descartat per no limitar la confiugració a posibles skills posteriors.
 Posterior canvi a model obert
 
+#### LAVACHARTS
+##### Install:
+Composer.json: 
+```json
+"require": {
+  "php": "^7.1.3",
+  "fideloper/proxy": "^4.0",
+  "laravel/framework": "5.8.*",
+  "laravel/tinker": "^1.0",
+  "laravelcollective/html": "^5.4.0",
+  "khill/lavacharts" : "3.1.*"
+```
+```console
+php composer.phar update
+  ...
+  - Installing khill/lavacharts (3.1.11): Downloading (100%)
+```
+a edv/config/app.php:
+```php
+"providers" => [
+  ...
+  Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
+],
 
+"aliases" => [
+  ...
+  'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class
+]
+```
 
 
 ToDo - List
@@ -402,17 +430,22 @@ ToDo - List
       - [x] Validar amb 'alpha_dash'
     - [x] Verificar unique username
   - [x] Incloure Login al Navbar
-  - [ ] Dashboard - Basic info
-    - [ ] Carregar Config a la sessió (Anonim/Guest té els valors per defecte a la DB)
+  - [ ] Dashboard
+    - [ ] Info Bàsica
+    - [ ] Coffrets
+    - [x] Carregar Config a la sessió (Anonim/Guest té els valors per defecte a la DB)
   - [ ] Es manté la sessió entre canvis de idoma?
+
+- [ ] About (presentació)
 
 - [x] Skills
   - [x] Controlador
   - [x] Model DB
   - [x] Incorporar traducció
   - [x] Show returns view with -> config 
+  - [x] Botons navegació (Estadístiques)
 
-- [ ] Config :: Model-Controlador
+- [x] Config :: Model-Controlador
   - [x] Model DB
   - [x] Controlador: S'ha de filtrar per usuari (sessió)
   - [x] Obtenció dades config
@@ -448,15 +481,24 @@ ToDo - List
       - [ ] Text
   - [x] Captació dades dels tests
     - [x] coffert/store
-  - [ ] Obtenció dades usuari / anònimes <= Coffert
+  - [x] Obtenció dades usuari / anònimes <= Coffert
+  - [x] analytics.blade.php
+    - [x] Lavachart
+      - [x] Progrés personal
+      - [x] PPM/WPM dades totals
+    - [x] Botons navegació (Accés a Coffrets)
+    - [x] Traducció
+  - [x] data.blade.php:
+    - [x] Dades de la sessió
+    - [x] Botons navegació (Accés a Coffrets)
+    - [x] Traducció
 
-- [ ] Banc de dades
-  - [ ] Model: Coffert
-  - [ ] CoffertController
+- [x] Banc de dades
+  - [x] Model: Coffert
+  - [x] CoffertController
     - [x] Escritura 
-    - [ ] Lectura
+    - [x] Lectura
   - [x] Migració a base de dades
   
-- [ ]: Pendent (n:prioritat)
-- [0]: Realitzat
-- [x]: Realitzat i documentat
+- [ ] :Pendent
+- [x] :Realitzat

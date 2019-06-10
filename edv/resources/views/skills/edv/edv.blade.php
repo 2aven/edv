@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="jumb otron text-center">
+<div class="jumbotron text-center">
   <h1> {{ __('edv.title') }} </h1>
   <p> {{ __('edv.slogan') }} </p>
 </div>  
 
-<div class="container justify-content-center">
+<div class="justify-content-center">
   
   <div class="row">
     <div class="col-md-6 mx-auto text-justify">
