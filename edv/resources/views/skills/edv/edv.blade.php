@@ -21,16 +21,15 @@
       <h2 class="display-2 mb-5" id="current-word">·</h2>
       <input type="text" class="form-control form-control-lg"
       placeholder="· · ·" id="word-input" autofocus>
-      <h4 class="mt-3" id="message"></h4>
       
       <div class="row mt-5">
         <div class="col-md-6">
-          <h3>Time:
+          <h3> {{ __('edv.time') }}:
             <span id="time">00:00.0</span>
           </h3>
         </div>
         <div class="col-md-6">
-          <h3>PPM:
+          <h3> {{ __('edv.ppm') }}:
             <span id="ppm">0</span>
           </h3>
         </div>
@@ -39,8 +38,8 @@
       <div class="row mt-5">
         <div class="col-md-12">
           <div class="card card-body bg-secondary text-white">
-            <h5>Instructions</h5>
-            <p>Type each word while I take indirect measurements of your brain activity</p>
+            <h5>{{ __('edv.instruc') }} </h5>
+            <p> {{ __('edv.instxt') }} </p>
           </div>
         </div>
       </div>

@@ -9,6 +9,9 @@
     //Skill Main Page ::
     "title"   => "Entrenador Dvorak",
     "slogan"  => "Aprende mecanografía para escribir mas rápido que tu torrente de pensamiento",
+    "time"    => "Tiempo",
+    "instruc" => "Instrucciones",
+    "instxt"  => "Escribe cada palabra mientras tomo mediciones indirectas de tu actividad cerebral",
     
     //:: SkillsConf Index ::
     "conflink"  => "Configura",

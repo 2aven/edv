@@ -5,6 +5,12 @@
 
     "skills"  => "Skills",
     "about"   => "About eDⓋ",
+    "login"   => "Login",
+    "register" => "Register",
+
+    // Skills
+    "saved"   => "Saved",
+    "nolog"   => "No loggin",
 
     // Home Dashboard
     "logged_in" => "You are logged in!",

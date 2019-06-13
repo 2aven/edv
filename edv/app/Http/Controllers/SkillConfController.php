@@ -92,11 +92,11 @@ class SkillConfController extends Controller
       $skillConf->vconf   = $vconf;
       $skillConf->save();
       
-      $messages['edv'] = "Saved";    // <<<<< ------ TRANSLATE THIS 
+      $messages['edv'] = "saved"; 
     } else {
       // GUEST case: save options in session.
       session()->put($slug, $vconf);
-      $messages['edv'] = "No loggin";
+      $messages['edv'] = "nolog";
     }
     
     return view('pages.skills')->with(['skills'=>Skill::all(),'messages'=>$messages]);

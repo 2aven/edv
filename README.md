@@ -1,113 +1,11 @@
-# Entrenador Dvorak
-## Projecte Final de Cicle - ASIX
+Entrenador Dvorak
+===
+Projecte Final de Cicle - ASIX
+---
 ### Autor: Andreu Bió
 
 
-### Install: add notes a Doc.md:
-```console
-docker-compose up -d
-Creating network "pfc_edv-net" with the default driver
-Pulling edv-database (mariadb:latest)...
-latest: Pulling from library/mariadb
-6abc03819f3e: Pull complete
-05731e63f211: Pull complete
-0bd67c50d6be: Pull complete
-ab62701212b1: Pull complete
-b1f6f41348ef: Pull complete
-3bdaf925d088: Pull complete
-10ba8f10417b: Pull complete
-3806bed5c691: Pull complete
-24aae6d0fc18: Pull complete
-9104943e23ec: Pull complete
-ae510462589d: Pull complete
-ec23646ae61e: Pull complete
-3c301b916a4e: Pull complete
-Digest: sha256:db6e7bda67ea88efb00ba4ad82cb72dfee8938935914ae0948f6af523d398ca2
-Status: Downloaded newer image for mariadb:latest
-Building edv-web
-Step 1/2 : FROM php:apache
-apache: Pulling from library/php
-743f2d6c1f65: Pull complete
-6307e89982cc: Pull complete
-807218e72ce2: Downloading [==========================================>        ]  57.33MB/67.45MB
-5108df1d03f8: Download complete
-901e0b6a7fe5: Download complete
-5ffe11e7ab2c: Waiting
-da5f7a507956: Waiting
-d1c77e0395e3: Waiting
-178dc4dca86f: Waiting
-0abb62fba325: Waiting
-3d298b1f0f75: Waiting
-693315514366: Waiting
-91950b08acf3: Waiting
-```
-```console
-Creating pfc_edv-database_1 ... done
-Creating pfc_edv-web_1      ... done
-```
-```console
-docker ps -a
-CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                NAMES
-6112434701ed        pfc_edv-web         "docker-php-entrypoi…"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp   pfc_edv-web_1
-e34a5c43a202        mariadb:latest      "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp             pfc_edv-database_1
-```
-#### DOCKER_STUFF
-###### Incloure moduls mysql
-RUN	docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli pdo pdo_mysql
-###### Agregar modul rewrite al apache de Docker
-(ja ve activat per defecte) RUN a2enmod rewrite
 
-###### Envfile
-Al docker compose, substituir *enviroment* per:
-```yml
-    env_file:
-      - edv.env
-```
-i crear un arxiu amb les variables d'entorn
-```console
-MYSQL_ROOT_PASSWORD=contrasenya_admin
-MYSQL_DATABASE=nom_base_de_dades
-MYSQL_USER=nom_usuari
-MYSQL_PASSWORD=contrasenya_usuari
-```
-
-Comprovar que s'ha creat la DB:
-```console
-ariany@GLaDOS:~/PFC$ docker exec -it pfc_edv-database_1 mysql -u edv_web -p
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 10
-Server version: 10.3.15-MariaDB-1:10.3.15+maria~bionic mariadb.org binary distribution
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| edv                |
-| information_schema |
-+--------------------+
-2 rows in set (0.001 sec)
-```
-###### Host del database desde la xarxa interna
-establir nom del host al compose
-```yml
-    networks:
-      edv-net:
-        aliases:
-          - edv-db
-```
-Això s'ha d'inclorue al .env del projecte a Laravel :
-```env
-...
-  DB_CONNECTION=mysql
-  DB_HOST=**edv-db**
-  DB_PORT=3306
-...
-```
 
 #### Apache:
   ServerName dev.edv.net
@@ -116,202 +14,6 @@ Això s'ha d'inclorue al .env del projecte a Laravel :
 127.0.0.1	localhost
 127.0.0.1	dev.edv.net ca.dev.edv.net es.dev.edv.net en.dev.edv.net
 
-#### PagesController
-ariany@GLaDOS:~/PFC/edv$ php artisan make:controller PagesController
-Controller created successfully.
-
-#### Node.js (per compilar scss de Laravel)
-curl -sL https://deb.nodesource.com/setup_12.x | console -
-apt-get install -y nodejs
-```console
-ariany@GLaDOS:~/PFC/edv$ npm install
-```
-després:
-npm run dev     #per compilar
-npm run watch   #per que s'autocompili quan fem modificacións
-
-// webpack.mix.js -- Evitar error de mapeig de font després de: npm run dev / watch
-```js
-if (!mix.inProduction()) {
-  mix.webpackConfig({
-      devtool: 'source-map'
-  })
-  .sourceMaps()
-}
-```
-
-#### LanguageMiddleware
-```ShellSession
-ariany@GLaDOS:~/PFC/edv$ php artisan make:middleware LangMiddleware
-Middleware created successfully.
-```
-Agregar això al kernell
-```php
-  \App\Http\Middleware\LangMiddleware::class
-```
- include ::  el contingut
-```php
-public function handle($request, Closure $next){
-  // Obtain lang subdomain
-  $url_array = explode('.', parse_url($request->url(), PHP_URL_HOST));
-  $subdomain = $url_array[0];
-
-  $languages = \Config::get('app.locales');
-  if (array_key_exists($subdomain,\Config::get('app.locales')))
-    \App::setLocale($subdomain);
-
-  return $next($request);
-}
-```
-
- #### Skills Controller-Model
- ```console
-ariany@GLaDOS:~/PFC/edv$ php artisan make:controller SkillsController --resource
-Controller created successfully.
-ariany@GLaDOS:~/PFC/edv$ php artisan make:model Skill -m
-Model created successfully.
-Created Migration: 2019_05_19_103625_create_skills_table
-```
-En lloc d'usar SQL, usam el migrador amb aquesta info a database/migrations/*timestamp*_create_skills_table
-```php
-  public function up()
-  {
-    Schema::create('skills', function (Blueprint $table) {
-      $table->bigIncrements('skillId');
-      $table->tinytext('nomsk');
-      $table->tinytext('ruta');
-      $table->tinytext('imatge');
-      $table->timestamps();
-    });
-  }
-```
-EDIT: 
-El nom, com és subseptible a traducció, anirà a la pàgina junt amb el resta de la informació; elements direccionals com *ruta* o *imatge* només necessiten un **slug**, i la construcció del mòdul ha de respectar els noms dels arxius amb aquest format. 
-També s'ha inclòs el camp **vparam** que determina quines opcions es poden configurar, a partir del que després es genera l'administració de configuració (formulari).
-```PHP
-//      $table->string('name', 191);  // The index key prefix length limit is 767 bytes for InnoDB tables that use the REDUNDANT or COMPACT row format. Assuming a utf8mb4 character set and the maximum of 4 bytes for each character: 191 * 4 = 764 (works).
-      $table->string('slug', 24)->unique();   // Used as a construction parameter for 'route' and 'image'
-      $table->json('vparam');
-```
-https://stackoverflow.com/questions/43832166/laravel-5-4-specified-key-was-too-long-why-the-number-191 
-
-
-#### Migrate:: 
-
-```console
-root@76b63666f7c5:/var/www/html# php artisan migrate -v
-Migration table created successfully.
-Migrating: 2014_10_12_000000_create_users_table
-Migrated:  2014_10_12_000000_create_users_table
-Migrating: 2014_10_12_100000_create_password_resets_table
-Migrated:  2014_10_12_100000_create_password_resets_table
-Migrating: 2019_05_19_103625_create_skills_table
-Migrated:  2019_05_19_103625_create_skills_table
-Migrating: 2019_05_19_192712_create_skill_conf_table
-Migrated:  2019_05_19_192712_create_skill_conf_table
-Migrating: 2019_06_09_082855_create_coffrets_table
-Migrated:  2019_06_09_082855_create_coffrets_table
-
-```
-
-```sql
-Comprovació:
-
-MariaDB [(none)]> use edv
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-MariaDB [edv]> show tables;
-+-----------------+
-| Tables_in_edv   |
-+-----------------+
-| coffrets        |
-| migrations      |
-| password_resets |
-| skill_confs     |
-| skills          |
-| users           |
-+-----------------+
-6 rows in set (0.000 sec)
-
-MariaDB [edv]> show columns from skills;
-+------------+---------------------+------+-----+---------+----------------+
-| Field      | Type                | Null | Key | Default | Extra          |
-+------------+---------------------+------+-----+---------+----------------+
-| skillId    | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
-| slug       | varchar(24)         | NO   | UNI | NULL    |                |
-| created_at | timestamp           | YES  |     | NULL    |                |
-| updated_at | timestamp           | YES  |     | NULL    |                |
-+------------+---------------------+------+-----+---------+----------------+
-4 rows in set (0.001 sec)
-
-MariaDB [edv]> show columns from skill_confs;
-+------------+---------------------+------+-----+---------+-------+
-| Field      | Type                | Null | Key | Default | Extra |
-+------------+---------------------+------+-----+---------+-------+
-| userId     | bigint(20) unsigned | NO   | PRI | NULL    |       |
-| skillId    | bigint(20) unsigned | NO   | PRI | NULL    |       |
-| vconf      | longtext            | NO   |     | NULL    |       |
-| created_at | timestamp           | YES  |     | NULL    |       |
-| updated_at | timestamp           | YES  |     | NULL    |       |
-+------------+---------------------+------+-----+---------+-------+
-5 rows in set (0.001 sec)
-
-MariaDB [edv]> show columns from coffrets;
-+------------+---------------------+------+-----+---------+----------------+
-| Field      | Type                | Null | Key | Default | Extra          |
-+------------+---------------------+------+-----+---------+----------------+
-| id         | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
-| userId     | bigint(20) unsigned | NO   | MUL | NULL    |                |
-| skillId    | bigint(20) unsigned | NO   | MUL | NULL    |                |
-| vdata      | longtext            | NO   |     | NULL    |                |
-| created_at | timestamp           | YES  |     | NULL    |                |
-| updated_at | timestamp           | YES  |     | NULL    |                |
-+------------+---------------------+------+-----+---------+----------------+
-6 rows in set (0.001 sec)
-
-MariaDB [edv]> show columns from users;
-+-------------------+---------------------+------+-----+---------+----------------+
-| Field             | Type                | Null | Key | Default | Extra          |
-+-------------------+---------------------+------+-----+---------+----------------+
-| id                | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
-| user              | varchar(255)        | NO   | UNI | NULL    |                |
-| email             | varchar(255)        | NO   | UNI | NULL    |                |
-| name              | varchar(255)        | NO   |     | NULL    |                |
-| email_verified_at | timestamp           | YES  |     | NULL    |                |
-| password          | varchar(255)        | NO   |     | NULL    |                |
-| remember_token    | varchar(100)        | YES  |     | NULL    |                |
-| created_at        | timestamp           | YES  |     | NULL    |                |
-| updated_at        | timestamp           | YES  |     | NULL    |                |
-+-------------------+---------------------+------+-----+---------+----------------+
-9 rows in set (0.001 sec)
-```
-#### Artisan-tinker
-
-REVISAR CONTINGUT VCONF
-
-```console
-ariany@GLaDOS:~/PFC/edv$ docker exec -it pfc_edv-web_1 bash 
-root@76b63666f7c5:/var/www/html# php artisan tinker
-Psy Shell v0.9.9 (PHP 7.3.5 — cli) by Justin Hileman
->>> $skill = new App\Skill();
-=> App\Skill {#2965}
->>> $skill->slug='edv';
-=> "edv"
->>> $skill->save();
-=> true
->>> $sc = new App\SkillConf();
-=> App\SkillConf {#2965}
->>> $sc->userId=1;
-=> 1
->>> $sc->skillId=1;
-=> 1
->>> $sc->vconf='{"method":"word","lang":"es","keymap":"dv","backspc":"yes"}';
-=> "{"method":"word","lang":"es","keymap":"dv","backspc":"yes"}"
->>> $sc->save();
-=> true
-```
 
 #### Storage
 El contingut es guarda a /storage/app/public, però necessita un enllaç simbòlic a /public. Això es pot crear amb l'ordre:
@@ -320,29 +22,6 @@ $ php artisan storage:link
 The [public/storage] directory has been linked.
 ```
 
-#### USER
-
-```console
-php artisan make:auth
-
- The [layouts/app.blade.php] view already exists. Do you want to replace it? (yes/no) [no]:
- > yes
-
-Authentication scaffolding generated successfully.
-```
-migrations:
-```php 
-  // ::: Privacy policy ? :::
-  $table->string('email')->unique();
-```
-
-#### Fonts paraules, explicació sigmas
-
-#### Models amb claus compostes:
-(see SkillConf Model)
-
-#### JS Script:
-Necessita @stack al app.layout i s'injecta usant @push a la plantilla del skill
 
 #### config.blade.php
 Model inicial tancat::
@@ -373,42 +52,89 @@ Al Tinker...
 Necessita que la base de dades tingui un llistat de les opcions, però només utilitza 'select'. S'ha descartat per no limitar la confiugració a posibles skills posteriors.
 Posterior canvi a model obert
 
-#### LAVACHARTS
-##### Install:
-Composer.json: 
-```json
-"require": {
-  "php": "^7.1.3",
-  "fideloper/proxy": "^4.0",
-  "laravel/framework": "5.8.*",
-  "laravel/tinker": "^1.0",
-  "laravelcollective/html": "^5.4.0",
-  "khill/lavacharts" : "3.1.*"
-```
-```console
-php composer.phar update
-  ...
-  - Installing khill/lavacharts (3.1.11): Downloading (100%)
-```
-a edv/config/app.php:
-```php
-"providers" => [
-  ...
-  Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
-],
 
-"aliases" => [
-  ...
-  'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class
-]
+
+
+## Creació dels cert. digitals
+```console
+root@bae23350d9e2:/etc/apache2/ssl# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/ssl-cert-snakeoil.key -out /etc/apache2/ssl/ssl-cert-snakeoil.pem -subj "/C=ES/ST=Spain/L=Palma/O=eDv/OU=Development/CN=edv.net"
+Generating a RSA private key
+.........................................................+++++
+..........................+++++
+writing new private key to '/etc/apache2/ssl/ssl-cert-snakeoil.key'
+-----
 ```
+
+#### apache conf
+```console 
+root@bae23350d9e2:/etc/apache2/sites-enabled# cat edv-ssl.conf 
+<IfModule mod_ssl.c>
+	<VirtualHost *:443>
+		ServerAdmin infoabio@gmail.com 
+
+		DocumentRoot /var/www/html
+
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+		SSLEngine on
+		SSLCertificateFile	/etc/apache2/ssl/ssl-cert-snakeoil.pem
+		SSLCertificateKeyFile	/etc/apache2/ssl/ssl-cert-snakeoil.key
+		#SSLCertificateChainFile /etc/apache2/ssl/ssl.crt
+
+		#SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
+		<FilesMatch "\.(cgi|shtml|phtml|php)$">
+				SSLOptions +StdEnvVars
+		</FilesMatch>
+		<Directory /usr/lib/cgi-bin>
+				SSLOptions +StdEnvVars
+		</Directory>
+	</VirtualHost>
+</IfModule>
+```
+#### ln
+```console
+root@bae23350d9e2:/etc/apache2/sites-enabled# ln ../sites-available/edv-ssl.conf -s
+root@bae23350d9e2:/etc/apache2/sites-enabled# ls -la
+total 8
+drwxr-xr-x 2 root root 4096 Jun 13 14:20 .
+drwxr-xr-x 9 root root 4096 Jun 13 13:46 ..
+lrwxrwxrwx 1 root root   35 Apr 14 17:21 000-default.conf -> ../sites-available/000-default.conf
+lrwxrwxrwx 1 root root   31 Jun 13 14:20 edv-ssl.conf -> ../sites-available/edv-ssl.conf
+```
+
+#### .htaccess
+```console
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_URI} !^public
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
+
+## Docker login
+:$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: infoabio
+Password: 
+WARNING! Your password will be stored unencrypted in /home/ariany/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+
+ToAdd - List
+===
+
 
 
 ToDo - List
----
-- [ ] Documentació a .md
+===
+- [x] Documentació a .md
   - [ ] Install notes
-- [x] Docker - Producció
+- [ ] Docker - Producció
+- [x] Docker - Dev
   - [x] edv-database
   - [x] edv-web
     - [x] extenció: mysqli

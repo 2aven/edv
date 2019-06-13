@@ -4,7 +4,8 @@
   <div class="jumbotron text-center">
     <h1> {{ __('messages.title') }} </h1>
     <p> {{ __('messages.slogan') }} </p>
-    <p><a class="btn btn-primary btn-lg" href="/login" role="button">Login</a> <a class="btn btn-success btn-lg" href="/register" role="button">Register</a></p>
+    <p><a class="btn btn-primary btn-lg" href="/login" role="button">{{ __('messages.login') }}</a>
+      <a class="btn btn-success btn-lg" href="/register" role="button">{{ __('messages.register') }}</a></p>
     <br>
     <div class="links">
       <a href="/skills"> {{ __('messages.skills') }} </a>

@@ -5,6 +5,12 @@
 
     "skills"  => "Skills",
     "about"   => "Sobre eDⓋ",
+    "login"   => "Inicia Sessión",
+    "register" => "Registrate",
+
+    // Skills
+    "saved"   => "Guardado",
+    "nolog"   => "Sin sessión",
 
     // Home Dashboard
     "logged_in" => "Estás conectado!",

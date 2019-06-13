@@ -10,6 +10,9 @@
     //Skill Main Page ::
     "title"   => "Dvorak Trainer",
     "slogan"  => "Learn mecanography to write faster than your thought stream",
+    "time"    => "Time",
+    "instruc" => "Instructions",
+    "instxt"  => "Type each word while I take indirect measurements of your brain activity",
 
     //:: SkillsConf Index ::
     "conflink"  => "Configure",

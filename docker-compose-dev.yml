@@ -6,8 +6,8 @@ networks:
 services:
   edv-database:
     image: mariadb:latest
-    # volumes:
-    #   - ./db_data:/var/lib/mysql
+    volumes:
+      - ./db_data:/var/lib/mysql
     restart: always
     networks:
       edv-net:
@@ -17,7 +17,7 @@ services:
       - edv.env
 
   edv-web:
-    build: ./
+    build: ./php-apache
     depends_on:
       - "edv-database"
     networks:
@@ -28,6 +28,6 @@ services:
     links:
       - edv-database
     restart: always
-    # volumes:
-    #   - ./edv:/var/www/html
-    #   - ./apache2_files:/etc/apache2
+    volumes:
+      - ./edv:/var/www/html
+      - ./apache2_files:/etc/apache2
