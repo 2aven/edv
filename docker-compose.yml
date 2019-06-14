@@ -5,9 +5,10 @@ networks:
 
 services:
   edv-database:
-    image: mariadb:latest
-    # volumes:
-    #   - ./db_data:/var/lib/mysql
+    image: infoabio/edv-db:beta
+    container_name: edv-db
+    volumes:
+      - ./db_data:/var/lib/mysql
     restart: always
     networks:
       edv-net:
@@ -17,7 +18,8 @@ services:
       - edv.env
 
   edv-web:
-    build: ./
+    image: infoabio/edv-web:beta
+    container_name: edv-web
     depends_on:
       - "edv-database"
     networks:
@@ -28,6 +30,3 @@ services:
     links:
       - edv-database
     restart: always
-    # volumes:
-    #   - ./edv:/var/www/html
-    #   - ./apache2_files:/etc/apache2
